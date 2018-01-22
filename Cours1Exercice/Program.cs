@@ -458,9 +458,16 @@ namespace Cours1Exercice
             Console.WriteLine($"Votre Tarif est {MonPrix}$");
 
             //ex8
-            string Joe = "suif";
-            bool Palindrome = PalindromeCheck(Joe);
-            Console.WriteLine($"le string {Joe} est il un palindrome ?{Palindrome}");
+            string PalindromeToCheck = "oomoo";
+            bool Palindrome = PalindromeCheck(PalindromeToCheck);
+            // aurait pu le mettre direct dans ma fonction et retourner un string
+            string OuiOuNon;
+            if (Palindrome == true)
+            { OuiOuNon = "Oui"; }
+            else
+            { OuiOuNon = "Non"; }
+
+            Console.WriteLine($"le string {PalindromeToCheck} est il un palindrome ? {OuiOuNon}");
         }
     }
 }
