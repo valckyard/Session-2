@@ -18,13 +18,15 @@ namespace Cours1Exercice
     }
     class Program
     {
-        public static Random R = new Random();
+        public static Random R = new Random(); //Reutilisable Random
+
+        //Exercice 1    Taux et Taux en Reverse
         public static double Convertir(double Taux, double Montant, bool inverse)
         {
             double Converted = 0;
             if (inverse == true)
             {
-                Converted = (Montant * Taux); //1/Taux
+                Converted = (Montant * Taux);
                 return Converted;
             }
             if (inverse == false)
@@ -32,18 +34,22 @@ namespace Cours1Exercice
                 Converted = (Taux * Montant);
                 return Converted;
             }
-
             return Converted;
         }
 
-        public static void Afficher10EntiersMinMazMoyMedSum(int[] MyTable)
+        //Exercice 2    Table Moyenne Mediane Min Max Total Procedure
+        public static void RenderValueMoyMedSumMinMax(int[] MyTable)
         {
             int Total = 0;
             int Minimum = 0;
             int Maximum = 0;
             int Median = 0;
+
+            //Median
             int[] TempArray = MyTable;
             int TempCount = TempArray.Length;
+
+
             if (TempCount % 2 == 0)// even
             {
                 int Middle = TempArray[(TempCount / 2) - 1];
@@ -59,17 +65,17 @@ namespace Cours1Exercice
                 int Middle2 = TempArray[(TempCount / 2)];
             }
 
-
+            //Total
             foreach (int i in MyTable)
             {
                 Total += i;
 
             }
+
+            //Moyenne
             int Moyenne = Total / MyTable.Max();
 
-
-
-
+            //Maximum
             for (int i1 = 0; i1 < MyTable.Length; ++i1)
             {
 
@@ -83,8 +89,10 @@ namespace Cours1Exercice
                 }
             }
 
+            //Minimum
             Minimum = MyTable.Min();
 
+            //Render
             Console.WriteLine($"Mediane = {Median}");
             Console.WriteLine($"Moyenne = {Moyenne}");
             Console.WriteLine($"Minimum = {Minimum}");
@@ -92,14 +100,19 @@ namespace Cours1Exercice
             Console.WriteLine($"Total = {Total}");
         }
 
+        // Exercice 2.5  Table Moyenne Mediane Min Max Total dans une Liste Fonction
         public static List<Values> RetourneValeurs10int(int[] MyTable)
         {
             int Total = 0;
             int Minimum = 0;
             int Maximum = 0;
             int Median = 0;
+
+            //Median
             int[] TempArray = MyTable;
             int TempCount = TempArray.Length;
+
+
             if (TempCount % 2 == 0)// even
             {
                 int Middle = TempArray[(TempCount / 2) - 1];
@@ -115,17 +128,17 @@ namespace Cours1Exercice
                 int Middle2 = TempArray[(TempCount / 2)];
             }
 
-
+            //Total
             foreach (int i in MyTable)
             {
                 Total += i;
 
             }
+
+            //Moyenne
             int Moyenne = Total / MyTable.Max();
 
-
-
-
+            //Maximum
             for (int i1 = 0; i1 < MyTable.Length; ++i1)
             {
 
@@ -139,13 +152,9 @@ namespace Cours1Exercice
                 }
             }
 
+            //Minimum
             Minimum = MyTable.Min();
 
-            Console.WriteLine($"Mediane = {Median}");
-            Console.WriteLine($"Moyenne = {Moyenne}");
-            Console.WriteLine($"Minimum = {Minimum}");
-            Console.WriteLine($"Maximum = {Maximum}");
-            Console.WriteLine($"Total = {Total}");
             List<Values> MaxMinTotalMoyMed = new List<Values>();
 
             MaxMinTotalMoyMed.Add(new Values() { Medianne = Median, Moyennne = Moyenne, Max = Maximum, Min = Minimum, Total = Total });
@@ -154,6 +163,20 @@ namespace Cours1Exercice
 
         }
 
+        //Render List Value Exercise 2.5 Procedure
+        public static void RenderListValues(List<Values> MyList)
+        {
+            foreach (Values i in MyList)
+            {
+                Console.WriteLine($"Mediane = {i.Medianne}");
+                Console.WriteLine($"Moyenne = {i.Moyennne}");
+                Console.WriteLine($"Minimum = {i.Min}");
+                Console.WriteLine($"Maximum = {i.Max}");
+                Console.WriteLine($"Total = {i.Total}");
+            }
+        }
+
+        // Exercice 3   Creer table avec un Min Max en Fonction
         public static int[] CreateTableMinMax(int min, int max)
         {
 
@@ -174,6 +197,7 @@ namespace Cours1Exercice
             return TempTable;
         }
 
+        // Exercice 4     Prendre Une table et la mettre en ordre Procedure
         public static void SortedTableProcedure(int[] TheTable)
         {
             int Temp;
@@ -195,7 +219,8 @@ namespace Cours1Exercice
             }
         }
 
-        public static int fonctionnombresame(string Same, string[] MyStringTable)
+        // Exercice 4.5 Same string in a string Table Function 
+        public static int SameStringFunc(string Same, string[] MyStringTable)
         {
             int SameString = 0;
             foreach (string c in MyStringTable)
@@ -207,7 +232,9 @@ namespace Cours1Exercice
             }
             return SameString;
         }
-        public static string[] Extensions()
+
+        // Exercice 5  Sortir les extension dune liste de fichiers function
+        public static string[] ExtensionsOut()
         {
             string[] FilesNames = new string[] { "i.txt", "i.img", "i.cs" };
             string[] FilesExtentions = new string[FilesNames.Length];
@@ -220,6 +247,8 @@ namespace Cours1Exercice
             return FilesExtentions;
         }
 
+
+        // Exercice 6  // photocopie prix selon le nombre de copie
         static double PhotocopieCalcPrix(int nb)
         {
             double Prix = 0;
@@ -239,104 +268,167 @@ namespace Cours1Exercice
                 {
                     Prix += 0.07;
                 }
-
             }
             return Prix;
         }
 
-        public static void CinemaTarif(int Age, bool EtudApp, int Type2D3D)
+        // Exercice 7 Tarif selon critères de choix
+        public static double CinemaTarif()
         {
-            double PrixSession = 0;
+            double PrixSession = 0; // tarif sans modif
+            int TempAwnser = 0; // reutilisable awnser
+            bool Matin = false; // Matin vrai faux
+            bool Under18 = false; // UnderAge or not
 
-            int TempAwnser = 0;
-            bool Matin = false;
 
-            Console.WriteLine("Quelle taille de salle voulez-vous?  1- Grande");
-            Console.WriteLine("                                     2- Petite");
-            while (int.TryParse(Console.ReadLine(), out TempAwnser) == false)
+            do // Matin ou soir
             {
-
-                if (TempAwnser < 1 | TempAwnser > 2)
-                {
-                    Console.WriteLine("Quelle taille de salle voulez-vous?  1- Grande");
-                    Console.WriteLine("                                     2- Petite");
-                }
-            };
-            if (TempAwnser == 1)
-            {
-                PrixSession = 10.60;
-            }
-            else
-            {
-                PrixSession = 9.60;
-            }
-
-            TempAwnser = 0;
-            Console.WriteLine("Quelle Presentation voulez-Vous?     1- Matin");
-            Console.WriteLine("                                     2- Soir");
-            while (int.TryParse(Console.ReadLine(), out TempAwnser) == false)
-            {
-
-                if (TempAwnser < 1 | TempAwnser > 2)
+                Console.WriteLine("Quelle Presentation voulez-Vous?     1- Matin");
+                Console.WriteLine("                                     2- Soir");
+                while (int.TryParse(Console.ReadLine(), out TempAwnser) == false)
                 {
                     Console.WriteLine("Quelle Presentation voulez-Vous?     1- Matin");
                     Console.WriteLine("                                     2- Soir");
-                }
-            };
-            if(TempAwnser == 1)
+                };
+            } while (TempAwnser < 1 | TempAwnser > 2);
+
+            if (TempAwnser == 1)
             {
                 PrixSession = 6;
                 Matin = true;
             }
 
-            if(Matin==false)
+
+            TempAwnser = 0;
+            if (Matin == false) // Toutes les autres Questions on seulement de l'importance le soir a part le 2d 3d
             {
-                TempAwnser = 0;
-                Console.WriteLine("Quel age avez vous ?");
-                while (int.TryParse(Console.ReadLine(), out TempAwnser) == false)
+                do
                 {
-                    if (TempAwnser < 1 | TempAwnser > 110)
+                    Console.WriteLine("Quelle taille de salle voulez-vous?  1- Grande");
+                    Console.WriteLine("                                     2- Petite");
+                    while (int.TryParse(Console.ReadLine(), out TempAwnser) == false)
+                    {
+                        Console.WriteLine("Quelle taille de salle voulez-vous?  1- Grande");
+                        Console.WriteLine("                                     2- Petite");
+                    };
+
+                } while (TempAwnser < 1 | TempAwnser > 2);
+
+                if (TempAwnser == 1)
+                {
+                    PrixSession = 10.60;
+                }
+                else
+                {
+                    PrixSession = 9.60;
+                }
+
+
+                TempAwnser = 0;
+                do
+                {
+                    Console.WriteLine("Quel age avez vous ?");
+                    while (int.TryParse(Console.ReadLine(), out TempAwnser) == false)
                     {
                         Console.WriteLine("Quel age avez vous ?");
-                    }
-                }
+                    };
+                } while (TempAwnser < 1 | TempAwnser > 110);
                 {
                     if (TempAwnser < 18)
                     {
                         PrixSession = 6.90;
+                        Under18 = true;
                     }
-                    else
-                    {
-                        //nochange
-                    }
-                    // question etudiant
-                    // question 2d 3d
                 }
-                
+
+
+                string EtudiantON;
+                if (Under18 == false) // ignoré si en dessous de 18 a cause du meme tarif 
+                {
+                    do
+                    {
+
+                        Console.WriteLine("Etes Vous Etudiant ? Oui ou Non?");
+
+                        EtudiantON = Console.ReadLine();
+
+
+                    } while (EtudiantON.ToUpper() != "OUI" && EtudiantON.ToUpper() != "NON");
+
+                    switch (EtudiantON)
+                    {
+                        case "OUI":
+                            PrixSession = 6.90;
+                            break;
+                        case "NON":
+                            break;
+                    }
+
+                }
+
+            }
+
+            TempAwnser = 0;
+            do // majoration de 2$ si 3d
+            {
+                Console.WriteLine("Quelle Type dePresentation voulez-Vous?     1- 2D");
+                Console.WriteLine("                                            2- 3D");
+                while (int.TryParse(Console.ReadLine(), out TempAwnser) == false)
+                {
+                    Console.WriteLine("Quelle Type dePresentation voulez-Vous?     1- 2D");
+                    Console.WriteLine("                                            2- 3D");
+                };
+            } while (TempAwnser < 1 | TempAwnser > 2);
+            if (TempAwnser == 2)
+            {
+                PrixSession += 2;
+            }
+
+            return PrixSession;
+        }
+
+        // Exercice 8 Palindrome bool function
+        public static bool PalindromeCheck(string MyString)
+        {
+            string Reversed = new string(MyString.Reverse().ToArray());
+            Console.WriteLine($"Original : {MyString}");
+            Console.WriteLine($"Reversed : {Reversed}");
+
+            if (Reversed == MyString)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
 
+
         static void Main(string[] args)
         {
+            // ex 1
             double CADtoUSD = Convertir(1, 0.6, true);
             Console.WriteLine(CADtoUSD);
 
             // ex 2
             int[] MyIntTable = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-            Afficher10EntiersMinMazMoyMedSum(MyIntTable);
+            RenderValueMoyMedSumMinMax(MyIntTable);
+
             // ex 2.5
             List<Values> My10Processsed = new List<Values>();
             My10Processsed = RetourneValeurs10int(MyIntTable);
+            RenderListValues(My10Processsed);
 
-            //ex3
+            // ex 3
             int[] TableMixed = CreateTableMinMax(12, 55);
             foreach (int i in TableMixed)
             {
                 Console.Write($"{i},");
             }
 
-            //ex4
+            // ex 4
             Console.WriteLine();
             SortedTableProcedure(TableMixed);
 
@@ -345,11 +437,11 @@ namespace Cours1Exercice
             string a = "a";
 
             Console.WriteLine();
-            int SameString = fonctionnombresame(a, MyStringTable);
+            int SameString = SameStringFunc(a, MyStringTable);
             Console.WriteLine($"il y {SameString} de {a} dans la table");
 
             //ex5 
-            string[] FileExten = Extensions();
+            string[] FileExten = ExtensionsOut();
             foreach (string i in FileExten)
             {
                 Console.Write($"{i},");
@@ -359,6 +451,16 @@ namespace Cours1Exercice
             Console.WriteLine();
             double PrixPhotocopie = PhotocopieCalcPrix(20);
             Console.WriteLine($"Prix des PhotoCopies = {PrixPhotocopie}$");
+
+            //ex7
+            Console.WriteLine();
+            double MonPrix = CinemaTarif();
+            Console.WriteLine($"Votre Tarif est {MonPrix}$");
+
+            //ex8
+            string Joe = "suif";
+            bool Palindrome = PalindromeCheck(Joe);
+            Console.WriteLine($"le string {Joe} est il un palindrome ?{Palindrome}");
         }
     }
 }
