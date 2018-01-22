@@ -449,7 +449,7 @@ namespace Cours1Exercice
 
             //ex6
             Console.WriteLine();
-            double PrixPhotocopie = PhotocopieCalcPrix(20);
+            double PrixPhotocopie = PhotocopieCalcPrix(31);
             Console.WriteLine($"Prix des PhotoCopies = {PrixPhotocopie}$");
 
             //ex7
