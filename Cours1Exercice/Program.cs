@@ -434,6 +434,44 @@ namespace Cours1Exercice
                 return false;
             }
         }
+
+        public static void PalindromeCheck2(string MyString)
+        {
+            int x = (MyString.Count() - 1);
+            string[] Reversed = new string[MyString.Count()];
+
+            foreach (char l in MyString)
+            {
+                Reversed[x] = l.ToString();
+                --x;
+            }
+            foreach(string s in Reversed)
+            {
+                Console.Write($"{s}");
+            }
+        }
+      
+        public static bool PalindromeRecur(string Mystring)
+        {
+            if (Mystring[Mystring.Count() - 1] == Mystring[0])
+            {
+                if (Mystring.Count() >=1)
+                {
+                    return true;
+                }
+                else
+                {
+             
+                        Mystring.Remove(Mystring[0]);
+                        Mystring.Remove(Mystring[Mystring.Count() - 1]);
+                        return PalindromeRecur(Mystring);
+                    
+                }
+            }
+            else
+                return false;
+        }
+
         public static void Space()
         {
             Console.WriteLine();
@@ -521,7 +559,7 @@ namespace Cours1Exercice
 
             // Ex 20 Palindrome Checker
             Space();
-            string PalindromeToCheck = "oomoo";
+            string PalindromeToCheck = "ommo";
             bool Palindrome = PalindromeCheck(PalindromeToCheck);
             // aurait pu le mettre direct dans ma fonction et retourner un string
             string OuiOuNon;
@@ -532,6 +570,13 @@ namespace Cours1Exercice
 
             Console.WriteLine($"le string {PalindromeToCheck} est il un palindrome ? {OuiOuNon}");
 
+            //Palindromecheck2
+            PalindromeCheck2(PalindromeToCheck);
+            Space();
+            bool Palincheck = PalindromeRecur(PalindromeToCheck);
+            Space();
+            Console.WriteLine(Palincheck);
+           
             // Ex 19 Calculate Price of movie theater with questions
             Space();
             double MonPrix = CinemaTarif();
