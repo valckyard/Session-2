@@ -1,7 +1,7 @@
-E:\Projects\Session 2\Cours1Exercice\bin\Debug\Cours1Exercice.exe.config
-E:\Projects\Session 2\Cours1Exercice\bin\Debug\Cours1Exercice.exe
-E:\Projects\Session 2\Cours1Exercice\bin\Debug\Cours1Exercice.pdb
 E:\Projects\Session 2\Cours1Exercice\obj\Debug\Cours1Exercice.csprojResolveAssemblyReference.cache
 E:\Projects\Session 2\Cours1Exercice\obj\Debug\Cours1Exercice.csproj.CoreCompileInputs.cache
-E:\Projects\Session 2\Cours1Exercice\obj\Debug\Cours1Exercice.exe
-E:\Projects\Session 2\Cours1Exercice\obj\Debug\Cours1Exercice.pdb
+E:\Projects\Session 2\Cours1Exercice\bin\Debug\{.exe.config
+E:\Projects\Session 2\Cours1Exercice\bin\Debug\{.exe
+E:\Projects\Session 2\Cours1Exercice\bin\Debug\{.pdb
+E:\Projects\Session 2\Cours1Exercice\obj\Debug\{.exe
+E:\Projects\Session 2\Cours1Exercice\obj\Debug\{.pdb

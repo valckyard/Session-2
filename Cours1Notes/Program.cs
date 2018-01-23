@@ -20,6 +20,8 @@ namespace Cours1Notes
 
         public static void PuissanceProcedure(int n, int x) // Procedure
         {
+
+
             int Res = 1;
             for (int i = 0; i < n; i++)
             {
@@ -30,6 +32,7 @@ namespace Cours1Notes
 
         static void Main(string[] args)
         {
+
             PuissanceProcedure(2, 4);
             int Resultat = PuissanceFonction(2, 4);
 

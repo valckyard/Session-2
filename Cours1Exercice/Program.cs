@@ -9,18 +9,25 @@ namespace Cours1Exercice
 {
     public class Values
     {
-        public int Min { get; set; }
-        public int Max { get; set; }
-        public int Moyennne { get; set; }
-        public int Medianne { get; set; }
-        public int Total { get; set; }
+        public double Min { get; set; }
+        public double Max { get; set; }
+        public double Moyennne { get; set; }
+        public double Medianne { get; set; }
+        public double Total { get; set; }
 
     }
     class Program
     {
-        public static Random R = new Random(); //Reutilisable Random
+        public static Random random = new Random(); //Reutilisable Random
 
-        //Exercice 1    Taux et Taux en Reverse
+        public static double NextDouble(double minimum, double maximum)
+        {
+
+            return random.NextDouble() * (maximum - minimum) + minimum;
+
+        }
+
+        //Exercice 11   Taux et Taux en Reverse
         public static double Convertir(double Taux, double Montant, bool inverse)
         {
             double Converted = 0;
@@ -37,7 +44,7 @@ namespace Cours1Exercice
             return Converted;
         }
 
-        //Exercice 2    Table Moyenne Mediane Min Max Total Procedure
+        //Exercice 12    Table Moyenne Mediane Min Max Total Procedure
         public static void RenderValueMoyMedSumMinMax(int[] MyTable)
         {
             int Total = 0;
@@ -63,6 +70,8 @@ namespace Cours1Exercice
             else if (TempCount % 2 != 0) // odd
             {
                 int Middle2 = TempArray[(TempCount / 2)];
+
+                Median = Middle2;
             }
 
             //Total
@@ -100,49 +109,62 @@ namespace Cours1Exercice
             Console.WriteLine($"Total = {Total}");
         }
 
-        // Exercice 2.5  Table Moyenne Mediane Min Max Total dans une Liste Fonction
-        public static List<Values> RetourneValeurs10int(int[] MyTable)
+        // Exercice 13 Creation de table de notes doubles
+        public static List<double> DoubleTableMinMax(double min, double max)
         {
-            int Total = 0;
-            int Minimum = 0;
-            int Maximum = 0;
-            int Median = 0;
+            List<double> TempTable = new List<double>(); 
+            for (int i = 0; i < 31; i++) // assuming there is 31 student
+            {
+               TempTable.Add(NextDouble(min, max));
+            }
+            TempTable.Sort();
+            return TempTable;
+        }
+
+        // Exercice 13  Table Moyenne Mediane Min Max Total dans une Liste Fonction
+        public static List<Values> DoubleNotesAnalyserMinMaxMedSumMoy(List<double> MyTable)
+        {
+            double Total = 0;
+            double Minimum = 0;
+            double Maximum = 0;
+            double Median = 0;
 
             //Median
-            int[] TempArray = MyTable;
-            int TempCount = TempArray.Length;
+            int TempCount = MyTable.Count ;
 
 
             if (TempCount % 2 == 0)// even
             {
-                int Middle = TempArray[(TempCount / 2) - 1];
+                double Middle = MyTable[(TempCount / 2) - 1];
 
 
-                int Middle2 = TempArray[(TempCount / 2)];
+                double Middle2 = MyTable[(TempCount / 2)];
 
 
                 Median = (Middle + Middle2) / 2;
             }
             else if (TempCount % 2 != 0) // odd
             {
-                int Middle2 = TempArray[(TempCount / 2)];
+                double Middle2 = MyTable[(TempCount / 2)];
+
+                Median = Middle2;
             }
 
             //Total
-            foreach (int i in MyTable)
+            foreach (double i in MyTable)
             {
                 Total += i;
 
             }
 
             //Moyenne
-            int Moyenne = Total / MyTable.Max();
+            double Moyenne = Total / MyTable.Max();
 
             //Maximum
-            for (int i1 = 0; i1 < MyTable.Length; ++i1)
+            for (int i1 = 0; i1 < MyTable.Count; ++i1)
             {
 
-                for (int i2 = 0; i2 < MyTable.Length; ++i2)
+                for (int i2 = 0; i2 < MyTable.Count; ++i2)
                 {
 
                     if (MyTable[i2] > MyTable[i1])
@@ -177,15 +199,18 @@ namespace Cours1Exercice
         }
 
         // Exercice 3   Creer table avec un Min Max en Fonction
-        public static int[] CreateTableMinMax(int min, int max)
+        public static int[] intTableMinMax(int min, int max)
         {
 
-            int[] TempTable = new int[max - min];
+            //int[] TempTable = new int[max - min]; // table from to 
+            int[] TempTable = new int[10];
             for (int i = 0; i < TempTable.Length; i++)
             {
-                TempTable[i] = i + min;
+                TempTable[i] = random.Next(min, max + 1);
+                //TempTable[i] = i + min; // x+min = min allowed by table
             }
-
+            // already random 
+            /* 
             for (int i = 0; i < TempTable.Length; ++i)
             {
                 int j = R.Next() % TempTable.Length;
@@ -193,7 +218,7 @@ namespace Cours1Exercice
                 TempTable[i] = TempTable[j];
                 TempTable[j] = TempV;
 
-            }
+            }*/
             return TempTable;
         }
 
@@ -237,6 +262,12 @@ namespace Cours1Exercice
         public static string[] ExtensionsOut()
         {
             string[] FilesNames = new string[] { "i.txt", "i.img", "i.cs" };
+            foreach(string s in FilesNames)
+            {
+                Console.Write($"{s},");
+            }
+            Console.Write("       <------ Files");
+            Space();
             string[] FilesExtentions = new string[FilesNames.Length];
             int x = 0;
             foreach (string i in FilesNames)
@@ -403,61 +434,93 @@ namespace Cours1Exercice
                 return false;
             }
         }
+        public static void Space()
+        {
+            Console.WriteLine();
+        }
 
 
 
         static void Main(string[] args)
         {
-            // ex 1
+                                                         // ex 11
             double CADtoUSD = Convertir(1, 0.6, true);
             Console.WriteLine(CADtoUSD);
+            Space();
 
-            // ex 2
-            int[] MyIntTable = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-            RenderValueMoyMedSumMinMax(MyIntTable);
-
-            // ex 2.5
-            List<Values> My10Processsed = new List<Values>();
-            My10Processsed = RetourneValeurs10int(MyIntTable);
-            RenderListValues(My10Processsed);
-
-            // ex 3
-            int[] TableMixed = CreateTableMinMax(12, 55);
-            foreach (int i in TableMixed)
+            // Ex 14 Create a Table of 10 int Random Between 12 and 55
+            int[] MyIntTable  = intTableMinMax(12, 55);
+            
+            //Show Unsorted Table
+            foreach (int i in MyIntTable)
             {
                 Console.Write($"{i},");
             }
+            Console.Write("           UNSORTED");
 
-            // ex 4
-            Console.WriteLine();
-            SortedTableProcedure(TableMixed);
+            // ex 15   Made the sort here since it made sense
+            Space();
+            SortedTableProcedure(MyIntTable);
+            Console.Write("             SORTED");
 
-            //ex4.5
+            // ex 12 render the Values Moy Med Sum Min Max of the 10 random int table
+            Space();
+            Space();
+            RenderValueMoyMedSumMinMax(MyIntTable);
+
+            // ex 13 create a 31 List of double beween 0 and 100
+            List<double> MyDoubleListClassNotes = DoubleTableMinMax(0, 100);
+
+            //Show 31 double sorted
+            Space();
+            Console.WriteLine("Sorted 31 Doubles --->");
+            foreach (double d in MyDoubleListClassNotes)
+            {
+                Console.Write($"{d},");
+            }
+
+            //Process and show Values of Moy Med Sum Min Max of the 31 doubles
+            Space();
+            Space();
+            List<Values> MyNotesProcessed = new List<Values>(); //New class with all processed values
+            MyNotesProcessed = DoubleNotesAnalyserMinMaxMedSumMoy(MyDoubleListClassNotes); //transfer value to new class list
+            RenderListValues(MyNotesProcessed); // render my value visually
+
+            // Ex 16 calculate multiple of same string in a string[]
+            Space();
             string[] MyStringTable = new string[] { "a", "b", "c", "a", "a" };
-            string a = "a";
+            string a = "a";   // String to check for repetition
+            foreach(string s in MyStringTable)
+            {
+                Console.Write($"{s},");
+            }
+            Console.Write("            <------String Table");
 
-            Console.WriteLine();
-            int SameString = SameStringFunc(a, MyStringTable);
+            Space();
+            int SameString = SameStringFunc(a, MyStringTable); // calculate number of a in the string table
             Console.WriteLine($"il y {SameString} de {a} dans la table");
 
-            //ex5 
+            // Ex 17 return extensions of files
+            Space();
             string[] FileExten = ExtensionsOut();
             foreach (string i in FileExten)
             {
                 Console.Write($"{i},");
             }
+            Console.Write("        <----- Processed Extensions");
 
-            //ex6
-            Console.WriteLine();
-            double PrixPhotocopie = PhotocopieCalcPrix(31);
+            // Ex 18 Calculate price of a number of copies
+            Space();
+            Space();
+            int CopyNumbers = 31;
+            Console.WriteLine($"Number of copies =  {CopyNumbers}");
+            double PrixPhotocopie = PhotocopieCalcPrix(CopyNumbers);
             Console.WriteLine($"Prix des PhotoCopies = {PrixPhotocopie}$");
 
-            //ex7
-            Console.WriteLine();
-            double MonPrix = CinemaTarif();
-            Console.WriteLine($"Votre Tarif est {MonPrix}$");
+            // Ex 19 // end
 
-            //ex8
+            // Ex 20 Palindrome Checker
+            Space();
             string PalindromeToCheck = "oomoo";
             bool Palindrome = PalindromeCheck(PalindromeToCheck);
             // aurait pu le mettre direct dans ma fonction et retourner un string
@@ -468,6 +531,11 @@ namespace Cours1Exercice
             { OuiOuNon = "Non"; }
 
             Console.WriteLine($"le string {PalindromeToCheck} est il un palindrome ? {OuiOuNon}");
+
+            // Ex 19 Calculate Price of movie theater with questions
+            Space();
+            double MonPrix = CinemaTarif();
+            Console.WriteLine($"Votre Tarif est {MonPrix}$");
         }
     }
 }
