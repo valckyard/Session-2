@@ -9,7 +9,9 @@ namespace Cours2Exercice
     class Program
     {
 
-        // Exercice 21
+
+
+        // Exercice 21 Write 5 time recursive Procedure
         public static void HelloNB(int Nb)
         {
             if (Nb <= 1)
@@ -19,12 +21,13 @@ namespace Cours2Exercice
             else
             {
                 Console.WriteLine("Hewwo!");
-                --Nb;
-                HelloNB(Nb);
+                HelloNB(--Nb);
             }
         }
 
-        // Exercice 22
+
+
+        // Exercice 22 write 5 times a message string in procedure
         public static void ProcedureMessage(int Nb, string Message)
         {
             {
@@ -35,13 +38,14 @@ namespace Cours2Exercice
                 else
                 {
                     Console.WriteLine(Message);
-                    --Nb;
-                    ProcedureMessage(Nb, Message);
+                    ProcedureMessage(--Nb, Message);
                 }
             }
         }
 
-        // Exercice 23
+
+
+        // Exercice 23 Power recursively
         public static int Puissancefunc(int Nbinit, int Pow)
         {
 
@@ -52,17 +56,14 @@ namespace Cours2Exercice
                 }
                 else
                 {
-                    --Pow;
-                    return Nbinit * Puissancefunc(Nbinit, Pow);
+                    return Nbinit * Puissancefunc(Nbinit, --Pow);
                 }
             }
         }
-        //Ex24*: Réaliser une procédure récursive qui, à partir d’une chaine de caractère, va afficher dans la
-        //console chaque caractère de la chaine.
-        //Indice : vous aurez besoin de la méthode Substring des chaines de caractères :
-        //aaaaabbbcccccccdd.Substring(5, 3) = bbb
 
-        // Exercice 24 Methode 1
+
+
+        // Exercice 24 Recursively write a string
         public static void RecusiveStringOneByOne(string MyString)
         {
           
@@ -75,27 +76,94 @@ namespace Cours2Exercice
                 else
                 {
                     Console.Write(MyString.Substring(0, 1));
-                    RecusiveStringOneByOne(MyString.Remove(MyString[0]));
+                    RecusiveStringOneByOne(MyString.Remove(0, 1));
                   
                 }
             }
         }
+
+
+
+        // Exercice 25 Bool Check if a Palindrome
+        public static bool PalindromeRecursive(string MyString)
+        {
+            if (MyString[MyString.Count() - 1] == MyString[0])
+            {
+                if (MyString.Count() >= 1)
+                {
+                    return true;
+                }
+                else
+                {
+
+                    MyString.Remove(MyString[0]);
+                    MyString.Remove(MyString[MyString.Count() - 1]);
+                    return PalindromeRecursive(MyString);
+
+                }
+            }
+            else
+                return false;
+        }
+
+        public static void S()
+        {
+            Console.WriteLine();
+        }
+
         static void Main(string[] args)
         {
+
+
             // Exercice 21
             HelloNB(5);
+            S();
+            S();
+
+
+
 
             // Exercice 22
             string Message = "Yay i love potatoes!";
             ProcedureMessage(5, Message);
+            S();
+            S();
+
+
+
 
             // Exercice 23
             int Resultat = Puissancefunc(2, 7);
             Console.WriteLine(Resultat);
+            S();
+            S();
+
+
 
             // Exercice 24
             string StringToDecomp = "J'aime les Patates";
             RecusiveStringOneByOne(StringToDecomp);
+            S();
+            S();
+
+
+
+            //Exercice 25
+            string PalindromeToCheck = "ommo";
+
+            bool PalincCHK = PalindromeRecursive(PalindromeToCheck);
+            
+            // aurait pu le mettre direct dans ma fonction et retourner un string
+            string OuiOuNon;
+
+            if (PalincCHK == true)
+            { OuiOuNon = "Oui"; }
+            else
+            { OuiOuNon = "Non"; }
+
+            Console.WriteLine($"le string {PalindromeToCheck} est il un palindrome ? {OuiOuNon}");
+
+            Console.WriteLine(PalincCHK); // Simple Bool Result
         }
     }
 }
