@@ -29,23 +29,25 @@ namespace Cours1Exercice
         }
 
         //Exercice 11   Taux et Taux en Reverse
-        public static double Convertir(double Rate, double Montant, bool inverse)
+        public static double Convertir(double Montant, bool inverse)
         {
 
             Dictionary<string, double> rates = new Dictionary<string, double>();
-            rates.Add("CanadianDollar", 0.6);
+            rates.Add("CAD", 0.81);
             rates.Add("USD", 1.0);
 
 
             double Converted = 0;
             if (inverse == true)
             {
-                Converted = (Montant * Rate);
+                Converted = (Montant * (rates["CAD"] / rates["USD"]));
+                Console.Write($"CAD To USD : {Converted} ");
                 return Converted;
             }
             if (inverse == false)
             {
-                Converted = (Rate * Montant);
+                Converted = (Montant * (rates["USD"] / rates["CAD"]));
+                Console.Write($"USD To CAD : {Converted} ");
                 return Converted;
             }
             return Converted;
@@ -481,9 +483,8 @@ namespace Cours1Exercice
                 case 1:
                     {
                         // ex 11
-                        double CADtoUSD = Convertir(1, 0.6, true);
-                        Console.Write("CAD To USD : ");
-                        Console.WriteLine(CADtoUSD);
+                        double CADtoUSD = Convertir(50, true);
+                        double USDtoCAD = Convertir(50, false);
                         Space();
                         Space();
                     }
