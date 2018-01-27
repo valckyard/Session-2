@@ -59,8 +59,10 @@ namespace Cours3Exercice
             Console.WriteLine(x);
             return somme;
         }
-        // Reponse Quadratique =  y= 2n+3n^2   n=4  4*2 8   +  16 *3 48 = 56
-        // Reponse                y = n(2+3n)
+        // Reponse Quadratique =  n(2+3n)  Simplifie  a  ===== {{ 2n+3n^2 }}                 
+
+
+
 
         //Ex33*: Donner le nombre d’étapes effectuées par la fonction, en déduire la complexité en temps
         //(Notation de Landeau) de cet algorithme en C#
@@ -86,9 +88,6 @@ namespace Cours3Exercice
         // n = 4, 1 + 2*(1+2*(1+2*(1))) = 15 étapes         = 14 + 1 /                     n(1+2(1)) +1
         // n = 5  1 + 2*(1+2*(1+2*(1+2*(1)))) = 29 etapes   = 30 + 1  
         // n = 6  1 + 2*(1+2*(1+2*(1+2*(1+2*(1))))) 63 et   = 62 + 1
-        
-
-        // f(n) = 2(n-1) + 1
 
 
         //
@@ -96,7 +95,7 @@ namespace Cours3Exercice
         //  3       3         (1 + 2 *(       1*2*4+4 
         //2   2   2   2        ( 1 + 2 *(     1+1+1
         //1   1   1   1          (1)          15
-        
+
 
         //      5               1*2*4*8+8
         //  4       4           1+1+1+1
@@ -105,7 +104,15 @@ namespace Cours3Exercice
         //11   1111     11
 
 
-        // (2^n)-(n-(n-1)) ou (2^n) -1
+        // Fonction Recusive
+        // f(n) = 2(n-1) + 1
+
+        // Reponse 
+        // {{ (2^n)-(n-(n-1)) }} ou {{ (2^n) -1 }}
+        //Donc Finalement format {{ O^n }} expotentielle
+
+
+
 
         static void Main(string[] args)
         {

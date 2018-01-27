@@ -111,59 +111,101 @@ namespace Cours2Exercice
             Console.WriteLine();
         }
 
+        //Clean Question Interface
+        static int SwitchExercices()
+        {
+            int x;
+            do
+            {
+
+                Console.WriteLine($"Quel Exercice voulez vous essayer ?   1 - Exercice 21 : Recursive Hello ");
+                Console.WriteLine($"                                      2 - Exercice 22 : Recursive string message ");
+                Console.WriteLine($"                                      3 - Exercice 23 : Puissance Recursive");
+                Console.WriteLine($"                                      4 - Exercice 24 : Decomposer une string recursivement por la reecrire");
+                Console.WriteLine($"                                      5 - Exercice 25 : Palindrome Check");
+                while (int.TryParse(Console.ReadLine(), out x) == false)
+                {
+                    Console.WriteLine("Un nombre gros epais");
+                }
+            } while (x < 1 | x > 5);
+            return x;
+        }
+
+
+        //Clean Switch to choose Exercice
+        static void Exercices()
+        {
+            int Choix = SwitchExercices();
+            Console.Clear();
+            switch (Choix)
+            {
+                case 1:
+                    {
+                        // Exercice 21
+                        HelloNB(5);
+                        S();
+                        S();
+                    }
+                    break;
+                case 2:
+                    {
+                        // Exercice 22
+                        string Message = "Yay i love potatoes!";
+                        ProcedureMessage(5, Message);
+                        S();
+                        S();
+
+                    }
+                    break;
+                case 3:
+                    {
+
+                        // Exercice 23
+                        int Resultat = Puissancefunc(2, 7);
+                        Console.WriteLine(Resultat);
+                        S();
+                        S();
+
+                    }
+                    break;
+                case 4:
+                    {
+                        // Exercice 24
+                        string StringToDecomp = "J'aime les Patates";
+                        RecusiveStringOneByOne(StringToDecomp);
+                        S();
+                        S();
+                    }
+                    break;
+                case 5:
+                    {
+
+                        //Exercice 25
+                        string PalindromeToCheck = "ommo";
+
+                        bool PalincCHK = PalindromeRecursive(PalindromeToCheck);
+
+                        // aurait pu le mettre direct dans ma fonction et retourner un string
+                        string OuiOuNon;
+
+                        if (PalincCHK == true)
+                        { OuiOuNon = "Oui"; }
+                        else
+                        { OuiOuNon = "Non"; }
+
+                        Console.WriteLine($"le string {PalindromeToCheck} est il un palindrome ? {OuiOuNon}");
+
+                        Console.WriteLine(PalincCHK); // Simple Bool Result
+                    }
+                    break;
+
+            }
+            Exercices();
+        }
+
         static void Main(string[] args)
         {
-
-
-            // Exercice 21
-            HelloNB(5);
-            S();
-            S();
-
-
-
-
-            // Exercice 22
-            string Message = "Yay i love potatoes!";
-            ProcedureMessage(5, Message);
-            S();
-            S();
-
-
-
-
-            // Exercice 23
-            int Resultat = Puissancefunc(2, 7);
-            Console.WriteLine(Resultat);
-            S();
-            S();
-
-
-
-            // Exercice 24
-            string StringToDecomp = "J'aime les Patates";
-            RecusiveStringOneByOne(StringToDecomp);
-            S();
-            S();
-
-
-
-            //Exercice 25
-            string PalindromeToCheck = "ommo";
-
-            bool PalincCHK = PalindromeRecursive(PalindromeToCheck);
-            
-            // aurait pu le mettre direct dans ma fonction et retourner un string
-            string OuiOuNon;
-
-            if (PalincCHK == true)
-            { OuiOuNon = "Oui"; }
-            else
-            { OuiOuNon = "Non"; }
-
-            Console.WriteLine($"le string {PalindromeToCheck} est il un palindrome ? {OuiOuNon}");
-
-            Console.WriteLine(PalincCHK); // Simple Bool Result
+            Exercices();
         }
     }
 }

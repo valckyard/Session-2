@@ -132,7 +132,7 @@ namespace Cours1Exercice
         // Exercice 13  Table Moyenne Mediane Min Max Total dans une Liste Fonction
         public static List<double> ReturnDoubleOverAverage(List<double> MyTable)
         {
-            
+
             double Total = 0;
             double Minimum = 0;
             double Maximum = 0;
@@ -193,7 +193,7 @@ namespace Cours1Exercice
             MaxMinTotalMoyMed.Add(new Values() { Medianne = Median, Moyennne = Moyenne, Max = Maximum, Min = Minimum, Total = Total });
             RenderListValues(MaxMinTotalMoyMed); //Add value to my Class to show them (unnessasary but fun)
 
-            foreach(double d in MyTable) // Add >Averages grades to double list
+            foreach (double d in MyTable) // Add >Averages grades to double list
             {
                 if (d > Moyenne)
                 {
@@ -282,7 +282,7 @@ namespace Cours1Exercice
         // Exercice 17  Sortir les extension dune liste de fichiers function
         public static string[] ExtensionsOut(string[] FilesNames)
         {
-           
+
             foreach (string s in FilesNames)
             {
                 Console.Write($"{s},");
@@ -446,135 +446,203 @@ namespace Cours1Exercice
             Console.WriteLine();
         }
 
+        //Clean Question Interface
+        static int SwitchExercices()
+        {
+            int x;
+            do
+            {
+
+                Console.WriteLine($"Quel Exercice voulez vous essayer ?   1 - Exercice 11 : Taux de Change  ");
+                Console.WriteLine("                                     {2 - Exercice 14 : Creer table 10 elements random Min/Max ");
+                Console.WriteLine("                              Block  {    Exercice 15 : Trier la table en ordre croissant ");
+                Console.WriteLine("                                     {____Exercice 12 : Procedure qui affiche Moy/Med/Min/Max/Total des 10 elements ");
+                Console.WriteLine($"                                      3 - Exercice 13 : Creer ListeDouble /Trier/Min/Moy...etc Et sortir valeurs > Moy");
+                Console.WriteLine($"                                      4 - Exercice 16 : Fonction qui dit combien du meme String est dans la chaine");
+                Console.WriteLine($"                                      5 - Exercice 17 : Retourner les extentions d'une liste de fichiers");
+                Console.WriteLine($"                                      6 - Exercice 18 : Prix de photocopies");
+                Console.WriteLine($"                                      7 - Exercice 19 : Tarif de Cinema");
+                while (int.TryParse(Console.ReadLine(), out x) == false)
+                {
+                    Console.WriteLine("Un nombre gros epais");
+                }
+            } while (x < 1 | x > 7);
+            return x;
+        }
+
+
+        //Clean Switch to choose Exercice
+        static void Exercices()
+        {
+            int Choix = SwitchExercices();
+            Console.Clear();
+            switch (Choix)
+            {
+                case 1:
+                    {
+                        // ex 11
+                        double CADtoUSD = Convertir(1, 0.6, true);
+                        Console.Write("CAD To USD : ");
+                        Console.WriteLine(CADtoUSD);
+                        Space();
+                        Space();
+                    }
+                    break;
+                case 2:
+                    {
+                        // Ex 14 Create a Table of 10 int Random Between 12 and 55
+                        int[] MyIntTable = intTableMinMax(12, 55);
+                        
+                        
+
+
+                        //Show Unsorted Table
+                        Console.Write("UNSORTED : ");
+                        foreach (int i in MyIntTable)
+                        {
+                            Console.Write($"{i},");
+                        }
+                        Space();
+                        Space();
+                        Space();
+
+
+
+                        // ex 15   Made the sort here since it made sense
+                        Console.Write("SORTED   : ");
+                        SortedTableProcedure(MyIntTable);
+                        Space();
+                        Space();
+                        Space();
+
+
+                        // ex 12 render the Values Moy Med Sum Min Max of the 10 random int table
+                        RenderValueMoyMedSumMinMax(MyIntTable);
+                        Space();
+                        Space();
+                    }
+                    break;
+
+
+                case 3:
+                    {
+                        
+                        
+                        // ex 13 create a 31 List of double beween 0 and 100
+                        List<double> MyDoubleListClassNotes = DoubleTableMinMax(0, 100);
+
+
+
+
+                        //Show 31 double sorted
+                        Console.WriteLine("Sorted 31 Doubles --->");
+                        foreach (double d in MyDoubleListClassNotes)
+                        {
+                            Console.Write($"{d},");
+                        }
+                        Space();
+                        Space();
+                        Space();
+
+
+
+                        //Process and show Values of Moy Med Sum Min Max of the 31 doubles // And Create a list of over average results!
+                        List<double> OverAverageReturn = new List<double>(); // Over average list double creation
+                        OverAverageReturn = ReturnDoubleOverAverage(MyDoubleListClassNotes); //transfer values  > Average to new double list and show Stats Values
+                        Space();
+                        Space();
+
+
+
+                        // Render over averages grades
+                        Console.WriteLine("Over Average of my 31 Doubles --->");
+                        foreach (double d in OverAverageReturn) // render my value visually
+                        {
+                            Console.Write($"{d},");
+                        }
+                        Space();
+                        Space();
+                        Space();
+                    }
+                    break;
+
+
+                case 4:
+                    {
+
+                        // Ex 16 calculate multiple of same string in a string[]
+                        string[] MyStringTable = new string[] { "a", "b", "c", "a", "a" };
+                        string a = "a";   // String to check for repetition
+                        foreach (string s in MyStringTable)
+                        {
+                            Console.Write($"{s},");
+                        }
+                        Console.Write("            <------String Table");
+
+                        Space();
+
+                        int SameString = SameStringFunc(a, MyStringTable); // calculate number of a in the string table
+                        Console.WriteLine($"il y {SameString} de {a} dans la table");
+                        Space();
+                        Space();
+                    }
+                    break;
+
+
+                case 5:
+                    {
+
+                        // Ex 17 return extensions of files
+                        string[] FilesNames = new string[] { "i.txt", "i.img", "i.cs" };
+                        string[] FileExten = ExtensionsOut(FilesNames);
+                        foreach (string i in FileExten)
+                        {
+                            Console.Write($"{i},");
+                        }
+                        Console.WriteLine("        <----- Processed Extensions");
+                        Space();
+                        Space();
+
+
+                    }
+                    break;
+
+
+                case 6:
+                    {
+
+                        // Ex 18 Calculate price of a number of copies
+                        int CopyNumbers = 31;
+
+
+                        Console.WriteLine($"Number of copies =  {CopyNumbers}");
+                        double PrixPhotocopie = PhotocopieCalcPrix(CopyNumbers);
+                        Console.WriteLine($"Prix des PhotoCopies = {PrixPhotocopie}$");
+                        Space();
+
+                    }
+                    break;
+
+
+                case 7:
+                    {
+
+                        // Ex 19 Calculate Price of movie theater with questions
+                        double MonPrix = CinemaTarif();
+                        Console.WriteLine($"Votre Tarif est {MonPrix}$");
+
+                    }
+                    break;
+            }
+            Exercices();
+        }
 
 
         static void Main(string[] args)
         {
 
+            Exercices();
 
-
-
-            // ex 11
-            double CADtoUSD = Convertir(1, 0.6, true);
-            Console.Write("CAD To USD : ");
-            Console.WriteLine(CADtoUSD);
-            Space();
-            Space();
-
-
-
-
-            // Ex 14 Create a Table of 10 int Random Between 12 and 55
-            int[] MyIntTable = intTableMinMax(12, 55);
-            //Show Unsorted Table
-            Console.Write("UNSORTED : ");
-            foreach (int i in MyIntTable)
-            {
-                Console.Write($"{i},");
-            }
-            Space();
-            Space();
-            Space();
-
-
-
-            // ex 15   Made the sort here since it made sense
-            Console.Write("SORTED   : ");
-            SortedTableProcedure(MyIntTable);
-            Space();
-            Space();
-            Space();
-
-
-            // ex 12 render the Values Moy Med Sum Min Max of the 10 random int table
-            RenderValueMoyMedSumMinMax(MyIntTable);
-            Space();
-            Space();
-
-
-
-
-            // ex 13 create a 31 List of double beween 0 and 100
-            List<double> MyDoubleListClassNotes = DoubleTableMinMax(0, 100);
-
-
-
-
-            //Show 31 double sorted
-            Console.WriteLine("Sorted 31 Doubles --->");
-            foreach (double d in MyDoubleListClassNotes)
-            {
-                Console.Write($"{d},");
-            }
-            Space();
-            Space();
-            Space();
-
-
-
-            //Process and show Values of Moy Med Sum Min Max of the 31 doubles // And Create a list of over average results!
-            List<double> OverAverageReturn = new List<double>(); // Over average list double creation
-            OverAverageReturn = ReturnDoubleOverAverage(MyDoubleListClassNotes); //transfer values  > Average to new double list and show Stats Values
-            Space();
-            Space();
-
-            // Render over averages grades
-            Console.WriteLine("Over Average of my 31 Doubles --->");
-            foreach (double d in OverAverageReturn) // render my value visually
-            {
-                Console.Write($"{d},");
-            }
-            Space();
-            Space();
-            Space();
-
-
-            // Ex 16 calculate multiple of same string in a string[]
-            string[] MyStringTable = new string[] { "a", "b", "c", "a", "a" };
-            string a = "a";   // String to check for repetition
-            foreach (string s in MyStringTable)
-            {
-                Console.Write($"{s},");
-            }
-            Console.Write("            <------String Table");
-
-            Space();
-
-            int SameString = SameStringFunc(a, MyStringTable); // calculate number of a in the string table
-            Console.WriteLine($"il y {SameString} de {a} dans la table");
-            Space();
-            Space();
-
-
-
-            // Ex 17 return extensions of files
-            string[] FilesNames = new string[] { "i.txt", "i.img", "i.cs" };
-            string[] FileExten = ExtensionsOut(FilesNames);
-            foreach (string i in FileExten)
-            {
-                Console.Write($"{i},");
-            }
-            Console.WriteLine("        <----- Processed Extensions");
-            Space();
-            Space();
-
-
-
-
-            // Ex 18 Calculate price of a number of copies
-            int CopyNumbers = 31;
-            Console.WriteLine($"Number of copies =  {CopyNumbers}");
-            double PrixPhotocopie = PhotocopieCalcPrix(CopyNumbers);
-            Console.WriteLine($"Prix des PhotoCopies = {PrixPhotocopie}$");
-            Space();
-            Space();
-
-
-
-
-            // Ex 19 Calculate Price of movie theater with questions
-            double MonPrix = CinemaTarif();
-            Console.WriteLine($"Votre Tarif est {MonPrix}$");
         }
     }
 }
