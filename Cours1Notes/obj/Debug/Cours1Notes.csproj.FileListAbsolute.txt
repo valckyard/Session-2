@@ -1,7 +1,0 @@
-E:\Projects\Session 2\Cours1Notes\bin\Debug\Cours1Notes.exe.config
-E:\Projects\Session 2\Cours1Notes\bin\Debug\Cours1Notes.exe
-E:\Projects\Session 2\Cours1Notes\bin\Debug\Cours1Notes.pdb
-E:\Projects\Session 2\Cours1Notes\obj\Debug\Cours1Notes.csprojResolveAssemblyReference.cache
-E:\Projects\Session 2\Cours1Notes\obj\Debug\Cours1Notes.csproj.CoreCompileInputs.cache
-E:\Projects\Session 2\Cours1Notes\obj\Debug\Cours1Notes.exe
-E:\Projects\Session 2\Cours1Notes\obj\Debug\Cours1Notes.pdb
