@@ -8,7 +8,7 @@ using System.IO;
 namespace Cours1Exercice
 {
     public class Values
-    {
+    {//s
         public double Min { get; set; }
         public double Max { get; set; }
         public double Moyennne { get; set; }
