@@ -1,0 +1,7 @@
+E:\Projects\Session 2\Cours3Exercice\bin\Debug\Cours3Exercice.exe.config
+E:\Projects\Session 2\Cours3Exercice\bin\Debug\Cours3Exercice.exe
+E:\Projects\Session 2\Cours3Exercice\bin\Debug\Cours3Exercice.pdb
+E:\Projects\Session 2\Cours3Exercice\obj\Debug\Cours3Exercice.csproj.CoreCompileInputs.cache
+E:\Projects\Session 2\Cours3Exercice\obj\Debug\Cours3Exercice.exe
+E:\Projects\Session 2\Cours3Exercice\obj\Debug\Cours3Exercice.pdb
+E:\Projects\Session 2\Cours3Exercice\obj\Debug\Cours3Exercice.csprojResolveAssemblyReference.cache
