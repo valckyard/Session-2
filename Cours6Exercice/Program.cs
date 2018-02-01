@@ -65,11 +65,11 @@ namespace Cours6Exercice
             {
                 if ((i % 2) != 0)
                 {
-                    Booledint.Add(i,false);
+                    Booledint.Add(i, false);
                 }
                 else
                 {
-                    Booledint.Add(i,true);
+                    Booledint.Add(i, true);
                 }
             }
 
@@ -85,7 +85,7 @@ namespace Cours6Exercice
         private static void InitializeAfficherBonElements()
         {
             SortedList<int, bool> SortedIntODDEVEN = new SortedList<int, bool>();
-                AfficherBonsElements(ref SortedIntODDEVEN);
+            AfficherBonsElements(ref SortedIntODDEVEN);
         }
 
         //#################################################################################################//
@@ -118,10 +118,18 @@ namespace Cours6Exercice
                 Console.WriteLine(Copy.Peek());
                 ++count;
             }
-            catch (InvalidOperationException) // meh when its null it pull out that so i catch it and return what was in the pile
+            catch(System.Exception)
             {
                 return count;
             }
+            //catch (Exception ex)
+            //{
+            //    if (ex is StackOverflowException || ex is InvalidOperationException)
+            //    {
+                  
+            //        return count;
+            //    }
+            //}
 
             return UnStack(Copy, count);
 
@@ -378,7 +386,7 @@ namespace Cours6Exercice
             else
             {
                 Thread.Sleep(200);                                            // Does (i lie i set it at the end)
-                Console.WriteLine($"Setted Datatbase to {ServerTODO}!");   
+                Console.WriteLine($"Setted Datatbase to {ServerTODO}!");
                 Console.WriteLine();
             }
 
@@ -469,7 +477,7 @@ namespace Cours6Exercice
                 return;
             }
 
-            else 
+            else
             {
                 Console.Write($"Witch one do you want to delete ?:");
                 int choice;
@@ -590,8 +598,8 @@ namespace Cours6Exercice
         static void Main(string[] args)
         {
 
-        
-        TODOMENU();
+
+            TODOMENU();
         }
 
     }
