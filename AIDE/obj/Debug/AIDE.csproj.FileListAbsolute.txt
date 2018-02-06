@@ -1,7 +1,0 @@
-E:\Projects\Session 2\AIDE\bin\Debug\AIDE.exe.config
-E:\Projects\Session 2\AIDE\bin\Debug\AIDE.exe
-E:\Projects\Session 2\AIDE\bin\Debug\AIDE.pdb
-E:\Projects\Session 2\AIDE\obj\Debug\AIDE.csprojResolveAssemblyReference.cache
-E:\Projects\Session 2\AIDE\obj\Debug\AIDE.csproj.CoreCompileInputs.cache
-E:\Projects\Session 2\AIDE\obj\Debug\AIDE.exe
-E:\Projects\Session 2\AIDE\obj\Debug\AIDE.pdb
