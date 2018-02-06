@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 namespace Cours6Exercice
 {
 
-
+    //valcx.ddns.net
 
 
     class Program
@@ -199,6 +199,7 @@ namespace Cours6Exercice
         // Exercice 65 User Creation
         private static void ToDoUserCreation()
         {
+           
 
             Console.WriteLine("TODO DataBase to Use : ");
             string ChoosedDataBase = Console.ReadLine().ToUpper();
@@ -253,6 +254,9 @@ namespace Cours6Exercice
             if (!DCheck)
             {
                 Console.WriteLine("DatatBase des not exist! Returning to Menu...");
+                USERNAMESET = "";
+                PASSWORDSET = "";
+                DATABASESET = "";
                 s();
                 s();
                 TODOMENU();
@@ -277,6 +281,9 @@ namespace Cours6Exercice
             if (ReusableCheck == "")
             {
                 Console.WriteLine("Check Failed : User does not exist! Returning to Menu...");
+                USERNAMESET = "";
+                PASSWORDSET = "";
+                DATABASESET = "";
                 s();
                 s();
                 TODOMENU();
@@ -302,6 +309,9 @@ namespace Cours6Exercice
             if (ReusableCheck != PASSWORDSET)
             {
                 Console.WriteLine("Check Failed : Wrong Password! Returning to Menu...");
+                USERNAMESET = "";
+                PASSWORDSET = "";
+                DATABASESET = "";
                 s();
                 s();
                 TODOMENU();
@@ -323,7 +333,13 @@ namespace Cours6Exercice
         private static void AddTodoUser()
         {
 
-
+            if (USERNAMESET == "" | PASSWORDSET == "" | DATABASESET == "")
+            {
+                Console.WriteLine("User is not set! Sending back to Menu!");
+                s();
+                s();
+                TODOMENU();
+            }
 
             Console.WriteLine("Task To Add to TODO : ");
             string TASK = Console.ReadLine();
@@ -344,6 +360,14 @@ namespace Cours6Exercice
         // Exercice 65 Visual of TODO Entered
         private static void ShowTODO()
         {
+            if (USERNAMESET == "" | PASSWORDSET == "" | DATABASESET == "")
+            {
+                Console.WriteLine("User is not set! Sending back to Menu!");
+                s();
+                s();
+                TODOMENU();
+            }
+
             string SHOWTODORECEIVED = $"SELECT*FROM {DATABASESET}{USERNAMESET}TODO where USERID != '{USERNAMESET}'";
             bool CHECK = SendSQLCommand(SHOWTODORECEIVED, "YES", "NO");
             int counter = 4;
@@ -428,6 +452,14 @@ namespace Cours6Exercice
         //Exercice 65 Removing element from TODO
         private static void RemoveTODO()
         {
+            if (USERNAMESET == "" | PASSWORDSET == "" | DATABASESET == "")
+            {
+                Console.WriteLine("User is not set! Sending back to Menu!");
+                s();
+                s();
+                TODOMENU();
+            }
+
             Console.Write($"Witch one do you want to delete ?:");
             int choice;
             while (int.TryParse(Console.ReadLine(), out choice) == false) ;
@@ -444,6 +476,14 @@ namespace Cours6Exercice
             //send message ?
             private static void SendTODO()
         {
+            if (USERNAMESET == "" | PASSWORDSET == "" | DATABASESET == "")
+            {
+                Console.WriteLine("User is not set! Sending back to Menu!");
+                s();
+                s();
+                TODOMENU();
+            }
+
             Console.Write("Send Task to what user ? : ");
             string ReceivingUser = Console.ReadLine().ToUpper();
             InputCheck(ReceivingUser);
@@ -544,6 +584,9 @@ namespace Cours6Exercice
 
         static void Main(string[] args)
         {
+            USERNAMESET = "";
+            PASSWORDSET = "";
+            DATABASESET = "";
             TODOSqlConn = new SqlConnection();
             TODOSqlConn.ConnectionString = ConfigurationManager.ConnectionStrings["TODODBCON"].ToString();
             TODOMENU();
