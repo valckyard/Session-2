@@ -1,0 +1,11 @@
+E:\Projects\Session 2\TODODBSQL\bin\Debug\TODODBSQL.exe.config
+E:\Projects\Session 2\TODODBSQL\bin\Debug\TODODBSQL.exe
+E:\Projects\Session 2\TODODBSQL\bin\Debug\TODODBSQL.pdb
+E:\Projects\Session 2\TODODBSQL\obj\Debug\TODODBSQL.csproj.CoreCompileInputs.cache
+E:\Projects\Session 2\TODODBSQL\obj\Debug\TODODBSQL.exe
+E:\Projects\Session 2\TODODBSQL\obj\Debug\TODODBSQL.pdb
+E:\Projects\Session 2\TODODBSQL\obj\Debug\TODODBSQL.csprojResolveAssemblyReference.cache
+E:\Projects\Session 2\TODODBSQL\bin\Debug\TODODBSQL.exe.manifest
+E:\Projects\Session 2\TODODBSQL\bin\Debug\TODODBSQL.application
+E:\Projects\Session 2\TODODBSQL\obj\Debug\TODODBSQL.exe.manifest
+E:\Projects\Session 2\TODODBSQL\obj\Debug\TODODBSQL.application
