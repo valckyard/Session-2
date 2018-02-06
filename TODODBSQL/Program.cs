@@ -118,40 +118,15 @@ namespace Cours6Exercice
             return Checking;
         }
 
-        private static void NewDatabaseCreate(string dbname)
-        {
-           
-            try {
-                SqlCommand CreateDB = new SqlCommand();
 
-                CreateDB.Connection = TODOSqlConn;
-                CreateDB.CommandText = "todo_createdb";
-                CreateDB.Parameters.Clear();
-                CreateDB.CommandType = System.Data.CommandType.StoredProcedure;
-                CreateDB.Parameters.AddWithValue("@TableName", dbname);
-                CreateDB.Parameters.AddWithValue("@Column1Name", "USERNAME");
-                CreateDB.Parameters.AddWithValue("@Column1DataType", "VARCHAR(30)");
-                CreateDB.Parameters.AddWithValue("@Column2Name", "USERPASS");
-                CreateDB.Parameters.AddWithValue("@Column2DataType", "VARCHAR(30)");
-
-              
-                CreateDB.ExecuteNonQuery();
-          
-            }
-            catch (SqlException er)
-            {
-                Console.WriteLine("There was an error reported by SQL Server, " + er.Message);
-            }
-            }
-
-    private static void InputCheck(string x)
+        private static void InputCheck(string x)
         {
             if (x.Any(ch => !Char.IsLetterOrDigit(ch)) | x == "")
             {
                 Console.WriteLine("Invalid Input!");
                 TODOMENU();
             }
-            
+
         }
 
 
@@ -178,7 +153,7 @@ namespace Cours6Exercice
 
 
             Thread.Sleep(200);
-            
+
             // USING todo_createdb // stocked procedures
             OpenConnectionToSQLServ();
             NewDatabaseCreate(NewDataBaseName);
@@ -192,6 +167,35 @@ namespace Cours6Exercice
             //SendSQLCommand(CreateDB, DBDONE, DBNULL);
         }
 
+        // Stocked Procedure use
+        private static void NewDatabaseCreate(string dbname)
+        {
+
+            try
+            {
+                SqlCommand CreateDB = new SqlCommand();
+
+                CreateDB.Connection = TODOSqlConn;
+                CreateDB.CommandText = "todo_createdb";
+                CreateDB.Parameters.Clear();
+                CreateDB.CommandType = System.Data.CommandType.StoredProcedure;
+                CreateDB.Parameters.AddWithValue("@TableName", dbname);
+                CreateDB.Parameters.AddWithValue("@Column1Name", "USERNAME");
+                CreateDB.Parameters.AddWithValue("@Column1DataType", "VARCHAR(30)");
+                CreateDB.Parameters.AddWithValue("@Column2Name", "USERPASS");
+                CreateDB.Parameters.AddWithValue("@Column2DataType", "VARCHAR(30)");
+
+
+                CreateDB.ExecuteNonQuery();
+
+            }
+            catch (SqlException er)
+            {
+                Console.WriteLine("There was an error reported by SQL Server, " + er.Message);
+            }
+        }
+
+
 
         //##########################################################################################################################################
         //##########################################################################################################################################
@@ -199,21 +203,28 @@ namespace Cours6Exercice
         // Exercice 65 User Creation
         private static void ToDoUserCreation()
         {
-           
+
 
             Console.WriteLine("TODO DataBase to Use : ");
             string ChoosedDataBase = Console.ReadLine().ToUpper();
             InputCheck(ChoosedDataBase);
 
-            string DBExist = $"SELECT * FROM {ChoosedDataBase}";
-            string DBNULL = $" Could not choose {ChoosedDataBase} Database it does not exist! ";
-            string DBDONE = $"Using {ChoosedDataBase} Database!";
+            //check procedure
+            OpenConnectionToSQLServ();
+            bool Choose = CheckTableExist(ChoosedDataBase);
+            CloseConnectionToSQLServ();
 
-            bool Choose = SendSQLCommand(DBExist, DBDONE, DBNULL);
+            //hardcode SQL
+            //string DBExist = $"SELECT * FROM {ChoosedDataBase}";
+            //string DBNULL = $" Could not choose {ChoosedDataBase} Database it does not exist! ";
+            //string DBDONE = $"Using {ChoosedDataBase} Database!";
+            //SendSQLCommand(DBExist, DBDONE, DBNULL);
 
 
-            if (Choose)
+            if (Choose) // if db exist
             {
+
+                // USER VALUES #################################################
                 Console.WriteLine("Name new User : ");
                 string NewUsername = Console.ReadLine().ToUpper();
                 InputCheck(NewUsername);
@@ -221,16 +232,111 @@ namespace Cours6Exercice
                 Console.WriteLine($"{NewUsername} Password : ");
                 string NewPassword = Console.ReadLine().ToUpper();
                 InputCheck(NewPassword);
-
-                string insertfk = $"CREATE TABLE {ChoosedDataBase}{NewUsername}TODO (ID INT IDENTITY PRIMARY KEY,TODO TEXT NULL, USERID VARCHAR(30) FOREIGN KEY REFERENCES {ChoosedDataBase}(USERNAME));" +
-                    $"INSERT INTO {ChoosedDataBase} VALUES('{NewUsername}', '{NewPassword}')";
+                ////######################################################
 
 
-                bool Existornot = SendSQLCommand(insertfk, "yes", "no");
+                //Procedure User table and user creation
+                OpenConnectionToSQLServ();
+                bool Create = NewUserTableProc(ChoosedDataBase, NewUsername, NewPassword);
+                CloseConnectionToSQLServ();
+
+                if (!Create)
+                {
+                    Console.WriteLine("Une erreur c'est produite ! Reesayez !");
+                }
+                else
+                {
+                    Console.WriteLine($"User {NewUsername} Has been created in {ChoosedDataBase} Database!");
+                }
+
+                // hardcoded creation
+                // string insertfk = $"CREATE TABLE {ChoosedDataBase}{NewUsername}TODO (ID INT IDENTITY PRIMARY KEY,TODO TEXT NULL, USERID VARCHAR(30) FOREIGN KEY REFERENCES {ChoosedDataBase}(USERNAME));" +
+                // $"INSERT INTO {ChoosedDataBase} VALUES('{NewUsername}', '{NewPassword}')";
+                // bool Existornot = SendSQLCommand(insertfk, "yes", "no");
+
+            }
+            else
+            {
+                Console.WriteLine($"Database {ChoosedDataBase} does not exist!");
             }
 
 
         }
+
+        //Table check existance
+        private static bool CheckTableExist(string tablename)
+        {
+            int Count = 0;
+            try
+            {
+                SqlDataReader myReader = null;
+                SqlCommand CheckDBexist = new SqlCommand();
+
+                CheckDBexist.Connection = TODOSqlConn;
+                CheckDBexist.CommandText = "todo_checktableexist";
+                CheckDBexist.Parameters.Clear();
+                CheckDBexist.CommandType = System.Data.CommandType.StoredProcedure;
+                CheckDBexist.Parameters.AddWithValue("@TableName", tablename);
+
+
+                myReader = CheckDBexist.ExecuteReader();
+                while (myReader.Read())
+                {
+                    Count++;
+                }
+                myReader.Close();
+
+            }
+            catch (SqlException er)
+            {
+                Console.WriteLine("There was an error reported by SQL Server, " + er.Message);
+                return false;
+            }
+            if (Count != 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        
+
+        // new user table and associated to DBtable
+        private static bool NewUserTableProc(string DBCHOICE, string NUNAME, string NUPASS)
+        {
+
+            try
+            {
+                SqlCommand CreateUSER = new SqlCommand();
+
+                CreateUSER.Connection = TODOSqlConn;
+                CreateUSER.CommandText = "todo_createtodouser";
+                CreateUSER.Parameters.Clear();
+                CreateUSER.CommandType = System.Data.CommandType.StoredProcedure;
+                CreateUSER.Parameters.AddWithValue("@DATABASENAME", DBCHOICE);
+                CreateUSER.Parameters.AddWithValue("@NEWUSERNAME", NUNAME);
+                CreateUSER.Parameters.AddWithValue("@NEWUSERPASSWORD", NUPASS);
+                CreateUSER.Parameters.AddWithValue("@Column1Name", "ID");
+                CreateUSER.Parameters.AddWithValue("@Column1DataType", "INT");
+                CreateUSER.Parameters.AddWithValue("@Column2Name", "TODO");
+                CreateUSER.Parameters.AddWithValue("@Column2DataType", "TEXT");
+                CreateUSER.Parameters.AddWithValue("@Column3Name", "USERID");
+                CreateUSER.Parameters.AddWithValue("@Column3DataType", "VARCHAR(30)");
+
+
+                CreateUSER.ExecuteNonQuery();
+                return true;
+            }
+            catch (SqlException er)
+            {
+                Console.WriteLine("There was an error reported by SQL Server, " + er.Message);
+                return false;
+            }
+        }
+
 
         //##########################################################################################################################################
         //##########################################################################################################################################
@@ -246,10 +352,13 @@ namespace Cours6Exercice
             DATABASESET = Console.ReadLine().ToUpper();
             InputCheck(DATABASESET);
 
+            OpenConnectionToSQLServ();
+            bool DCheck = CheckTableExist(DATABASESET);
+            CloseConnectionToSQLServ();
 
-            string DatabaseCheck = $"SELECT * FROM {DATABASESET}";
-
-            bool DCheck = SendSQLCommand(DatabaseCheck, "yes", "no");
+            // harcoded check
+            //string DatabaseCheck = $"SELECT * FROM {DATABASESET}";
+            //bool DCheck = SendSQLCommand(DatabaseCheck, "yes", "no");
 
             if (!DCheck)
             {
@@ -268,17 +377,25 @@ namespace Cours6Exercice
 
 
 
+
+
+
             Console.Write("Set User Name to : ");
             USERNAMESET = Console.ReadLine().ToUpper();
             InputCheck(USERNAMESET);
 
-            string UserCheck = $"SELECT * FROM {DATABASESET} WHERE USERNAME = '{USERNAMESET}'";
 
-            string ReusableCheck = "";
 
-            ReusableCheck = CheckUserParamSQL(UserCheck, "USERNAME");
+            string UserCheck = $"{DATABASESET}{USERNAMESET}TODO";
 
-            if (ReusableCheck == "")
+            OpenConnectionToSQLServ();
+            bool Ucheck = CheckTableExist(UserCheck);
+            CloseConnectionToSQLServ();
+
+            //string ReusableCheck = "";
+            // ReusableCheck = CheckUserParamSQL(UserCheck, "USERNAME");
+
+            if (Ucheck == false)
             {
                 Console.WriteLine("Check Failed : User does not exist! Returning to Menu...");
                 USERNAMESET = "";
@@ -288,39 +405,41 @@ namespace Cours6Exercice
                 s();
                 TODOMENU();
             }
-
-            Console.WriteLine($"Passed Check : Setted User is {USERNAMESET}!");
-            s();
-
-
-
-
-            ReusableCheck = "";
-            Console.Write("Set Password to : ");
-            PASSWORDSET = Console.ReadLine().ToUpper();
-            InputCheck(PASSWORDSET);
-
-
-            string PassCheck = $"SELECT * FROM {DATABASESET} WHERE USERNAME = '{USERNAMESET}' AND USERPASS = '{PASSWORDSET}'";
-
-            ReusableCheck = CheckUserParamSQL(PassCheck, "USERPASS");
-
-
-            if (ReusableCheck != PASSWORDSET)
+            else
             {
-                Console.WriteLine("Check Failed : Wrong Password! Returning to Menu...");
-                USERNAMESET = "";
-                PASSWORDSET = "";
-                DATABASESET = "";
+                Console.WriteLine($"Passed Check : Setted User is {USERNAMESET}!");
                 s();
-                s();
-                TODOMENU();
-               
+
+
+                
+
+                Console.Write("Set Password to : ");
+                PASSWORDSET = Console.ReadLine().ToUpper();
+                InputCheck(PASSWORDSET);
+
+
+                string PassCheck = $"SELECT * FROM {DATABASESET} WHERE USERNAME = '{USERNAMESET}' AND USERPASS = '{PASSWORDSET}'";
+
+                string ReusableCheck = "";
+                ReusableCheck = CheckUserParamSQL(PassCheck, "USERPASS");
+
+
+                if (ReusableCheck != PASSWORDSET)
+                {
+                    Console.WriteLine("Check Failed : Wrong Password! Returning to Menu...");
+                    USERNAMESET = "";
+                    PASSWORDSET = "";
+                    DATABASESET = "";
+                    s();
+                    s();
+                    TODOMENU();
+
+                }
+
+
+                Console.WriteLine($"Passed Check : Password set!");
+
             }
-
-
-            Console.WriteLine($"Passed Check : Password set!");
-           
         }
 
 
@@ -344,13 +463,51 @@ namespace Cours6Exercice
             Console.WriteLine("Task To Add to TODO : ");
             string TASK = Console.ReadLine();
 
-            string TaskAdd = $"INSERT INTO {DATABASESET}{USERNAMESET}TODO VALUES('{TASK}', '{USERNAMESET}')";
+            OpenConnectionToSQLServ();
+            bool CHECK = AddSendodoUserProc(USERNAMESET, TASK);
+            CloseConnectionToSQLServ();
 
-            bool CHECK = SendSQLCommand(TaskAdd, "YES", "NO");
 
-            Console.WriteLine($"Task - {TASK} - Has been added to TODO !");
+            //string TaskAdd = $"INSERT INTO {DATABASESET}{USERNAMESET}TODO VALUES('{TASK}', '{USERNAMESET}')";
+            // bool CHECK = SendSQLCommand(TaskAdd, "YES", "NO");
 
+            if (CHECK)
+            {
+                Console.WriteLine($"Task - {TASK} - Has been added to TODO !");
+            }
+            else
+            {
+                Console.WriteLine($"Task - {TASK} - Could not be added !");
+            }
         }
+
+
+        // PROC ADD SEND
+        private static bool AddSendodoUserProc(string SendtoUser, string Task)
+        {
+
+            try
+            {
+                SqlCommand AddSendTODO = new SqlCommand();
+
+                AddSendTODO.Connection = TODOSqlConn;
+                AddSendTODO.CommandText = "todo_addsend";
+                AddSendTODO.Parameters.Clear();
+                AddSendTODO.CommandType = System.Data.CommandType.StoredProcedure;
+                AddSendTODO.Parameters.AddWithValue("@DATABASENAME", DATABASESET);
+                AddSendTODO.Parameters.AddWithValue("@USERNAME", USERNAMESET);
+                AddSendTODO.Parameters.AddWithValue("@SENDTOUSERNAME", SendtoUser);
+                AddSendTODO.Parameters.AddWithValue("@TASK", Task);
+                AddSendTODO.ExecuteNonQuery();
+                return true;
+            }
+            catch (SqlException er)
+            {
+                Console.WriteLine("There was an error reported by SQL Server, " + er.Message);
+                return false;
+            }
+        }
+
 
 
         //##########################################################################################################################################
@@ -441,7 +598,7 @@ namespace Cours6Exercice
             {
                 Console.WriteLine(e.ToString());
             }
-            
+
         }
 
 
@@ -463,18 +620,53 @@ namespace Cours6Exercice
             Console.Write($"Witch one do you want to delete ?:");
             int choice;
             while (int.TryParse(Console.ReadLine(), out choice) == false) ;
-            string DELETE = $"DELETE FROM {DATABASESET}{USERNAMESET}TODO WHERE ID = {choice}";
-            SendSQLCommand(DELETE, "YES", "NO");
+
+            OpenConnectionToSQLServ();
+            bool CHECK = RemovetodoProc(choice.ToString());
+            CloseConnectionToSQLServ();
+
+            if (CHECK)
+            {
+                Console.WriteLine($"TODO No {choice} has been removed from {USERNAMESET} TODO");
+            }
+            else
+            {
+                Console.WriteLine($"TODO No {choice} Could not be removed from {USERNAMESET} TODO");
+            }
+            // string DELETE = $"DELETE FROM {DATABASESET}{USERNAMESET}TODO WHERE ID = {choice}";
+           // SendSQLCommand(DELETE, "YES", "NO");
         }
 
+        private static bool RemovetodoProc(string id)
+        {
 
+            try
+            {
+                SqlCommand DeleteTodo = new SqlCommand();
+
+                DeleteTodo.Connection = TODOSqlConn;
+                DeleteTodo.CommandText = "todo_deletetodo";
+                DeleteTodo.Parameters.Clear();
+                DeleteTodo.CommandType = System.Data.CommandType.StoredProcedure;
+                DeleteTodo.Parameters.AddWithValue("@DATABASENAME", DATABASESET);
+                DeleteTodo.Parameters.AddWithValue("@USERNAME", USERNAMESET);
+                DeleteTodo.Parameters.AddWithValue("@ID", id);
+                DeleteTodo.ExecuteNonQuery();
+                return true;
+            }
+            catch (SqlException er)
+            {
+                Console.WriteLine("There was an error reported by SQL Server, " + er.Message);
+                return false;
+            }
+        }
 
         //##########################################################################################################################################
         //##########################################################################################################################################
         //##########################################################################################################################################
 
-            //send message ?
-            private static void SendTODO()
+        //send message ?
+        private static void SendTODO()
         {
             if (USERNAMESET == "" | PASSWORDSET == "" | DATABASESET == "")
             {
@@ -493,13 +685,21 @@ namespace Cours6Exercice
             string TASK = Console.ReadLine();
 
 
+            OpenConnectionToSQLServ();
+            bool CHECK = AddSendodoUserProc(ReceivingUser, TASK);
+            CloseConnectionToSQLServ();
 
-            string TaskAdd = $"INSERT INTO {DATABASESET}{ReceivingUser}TODO VALUES('{TASK}', '{USERNAMESET}')";
+            //string TaskAdd = $"INSERT INTO {DATABASESET}{ReceivingUser}TODO VALUES('{TASK}', '{USERNAMESET}')";
+            //bool CHECK = SendSQLCommand(TaskAdd, "YES", "NO");
 
-            bool CHECK = SendSQLCommand(TaskAdd, "YES", "NO");
-
-            Console.WriteLine($"Task - {TASK} - Has been added to {ReceivingUser} TODO !");
-
+            if (CHECK)
+            {
+                Console.WriteLine($"Task - {TASK} - Has been added to {ReceivingUser} TODO !");
+            }
+            else
+            {
+                Console.WriteLine($"Task - {TASK} - Could not be added to {ReceivingUser} TODO !");
+            }
         }
 
 
