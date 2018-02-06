@@ -159,12 +159,6 @@ namespace Cours6Exercice
             NewDatabaseCreate(NewDataBaseName);
             CloseConnectionToSQLServ();
 
-            //Hardcoded 
-            //Responses
-            //string DBNULL = $" Could not create {NewDataBaseName} Database! ";
-            //string DBDONE = $"Database {NewDataBaseName} Created!";
-            // string CreateDB = $"CREATE TABLE {NewDataBaseName} (USERNAME VARCHAR(30) PRIMARY KEY NOT NULL, USERPASS VARCHAR(30) NOT NULL);";
-            //SendSQLCommand(CreateDB, DBDONE, DBNULL);
         }
 
         // Stocked Procedure use
@@ -214,12 +208,6 @@ namespace Cours6Exercice
             bool Choose = CheckTableExist(ChoosedDataBase);
             CloseConnectionToSQLServ();
 
-            //hardcode SQL
-            //string DBExist = $"SELECT * FROM {ChoosedDataBase}";
-            //string DBNULL = $" Could not choose {ChoosedDataBase} Database it does not exist! ";
-            //string DBDONE = $"Using {ChoosedDataBase} Database!";
-            //SendSQLCommand(DBExist, DBDONE, DBNULL);
-
 
             if (Choose) // if db exist
             {
@@ -248,11 +236,6 @@ namespace Cours6Exercice
                 {
                     Console.WriteLine($"User {NewUsername} Has been created in {ChoosedDataBase} Database!");
                 }
-
-                // hardcoded creation
-                // string insertfk = $"CREATE TABLE {ChoosedDataBase}{NewUsername}TODO (ID INT IDENTITY PRIMARY KEY,TODO TEXT NULL, USERID VARCHAR(30) FOREIGN KEY REFERENCES {ChoosedDataBase}(USERNAME));" +
-                // $"INSERT INTO {ChoosedDataBase} VALUES('{NewUsername}', '{NewPassword}')";
-                // bool Existornot = SendSQLCommand(insertfk, "yes", "no");
 
             }
             else
@@ -337,6 +320,16 @@ namespace Cours6Exercice
             }
         }
 
+        private static void UserSetCheck()
+        {
+            if (USERNAMESET == null | PASSWORDSET == null | DATABASESET == null)
+            {
+                Console.WriteLine("User is not set! Sending back to Menu!");
+                s();
+                s();
+                TODOMENU();
+            }
+        }
 
         //##########################################################################################################################################
         //##########################################################################################################################################
@@ -349,23 +342,20 @@ namespace Cours6Exercice
         private static void SetTodoDBuser()
         {
             Console.Write("Set Database to use to : ");
-            DATABASESET = Console.ReadLine().ToUpper();
-            InputCheck(DATABASESET);
+            string Tset = Console.ReadLine().ToUpper();
+            InputCheck(Tset);
+            DATABASESET = Tset;
 
             OpenConnectionToSQLServ();
             bool DCheck = CheckTableExist(DATABASESET);
             CloseConnectionToSQLServ();
 
-            // harcoded check
-            //string DatabaseCheck = $"SELECT * FROM {DATABASESET}";
-            //bool DCheck = SendSQLCommand(DatabaseCheck, "yes", "no");
-
             if (!DCheck)
             {
                 Console.WriteLine("DatatBase des not exist! Returning to Menu...");
-                USERNAMESET = "";
-                PASSWORDSET = "";
-                DATABASESET = "";
+                USERNAMESET = null;
+                PASSWORDSET = null;
+                DATABASESET = null;
                 s();
                 s();
                 TODOMENU();
@@ -376,15 +366,11 @@ namespace Cours6Exercice
             Console.WriteLine();
 
 
-
-
-
-
+            Tset = null;
             Console.Write("Set User Name to : ");
-            USERNAMESET = Console.ReadLine().ToUpper();
-            InputCheck(USERNAMESET);
-
-
+            Tset = Console.ReadLine().ToUpper();
+            InputCheck(Tset);
+            USERNAMESET = Tset;
 
             string UserCheck = $"{DATABASESET}{USERNAMESET}TODO";
 
@@ -392,15 +378,12 @@ namespace Cours6Exercice
             bool Ucheck = CheckTableExist(UserCheck);
             CloseConnectionToSQLServ();
 
-            //string ReusableCheck = "";
-            // ReusableCheck = CheckUserParamSQL(UserCheck, "USERNAME");
-
             if (Ucheck == false)
             {
                 Console.WriteLine("Check Failed : User does not exist! Returning to Menu...");
-                USERNAMESET = "";
-                PASSWORDSET = "";
-                DATABASESET = "";
+                USERNAMESET = null;
+                PASSWORDSET = null;
+                DATABASESET = null;
                 s();
                 s();
                 TODOMENU();
@@ -411,12 +394,12 @@ namespace Cours6Exercice
                 s();
 
 
-                
 
+                Tset = null;
                 Console.Write("Set Password to : ");
-                PASSWORDSET = Console.ReadLine().ToUpper();
-                InputCheck(PASSWORDSET);
-
+                Tset = Console.ReadLine().ToUpper();
+                InputCheck(Tset);
+                PASSWORDSET = Tset;
 
                 string PassCheck = $"SELECT * FROM {DATABASESET} WHERE USERNAME = '{USERNAMESET}' AND USERPASS = '{PASSWORDSET}'";
 
@@ -427,9 +410,9 @@ namespace Cours6Exercice
                 if (ReusableCheck != PASSWORDSET)
                 {
                     Console.WriteLine("Check Failed : Wrong Password! Returning to Menu...");
-                    USERNAMESET = "";
-                    PASSWORDSET = "";
-                    DATABASESET = "";
+                    USERNAMESET = null;
+                    PASSWORDSET = null;
+                    DATABASESET = null;
                     s();
                     s();
                     TODOMENU();
@@ -452,13 +435,7 @@ namespace Cours6Exercice
         private static void AddTodoUser()
         {
 
-            if (USERNAMESET == "" | PASSWORDSET == "" | DATABASESET == "")
-            {
-                Console.WriteLine("User is not set! Sending back to Menu!");
-                s();
-                s();
-                TODOMENU();
-            }
+            UserSetCheck();
 
             Console.WriteLine("Task To Add to TODO : ");
             string TASK = Console.ReadLine();
@@ -466,10 +443,6 @@ namespace Cours6Exercice
             OpenConnectionToSQLServ();
             bool CHECK = AddSendodoUserProc(USERNAMESET, TASK);
             CloseConnectionToSQLServ();
-
-
-            //string TaskAdd = $"INSERT INTO {DATABASESET}{USERNAMESET}TODO VALUES('{TASK}', '{USERNAMESET}')";
-            // bool CHECK = SendSQLCommand(TaskAdd, "YES", "NO");
 
             if (CHECK)
             {
@@ -517,13 +490,7 @@ namespace Cours6Exercice
         // Exercice 65 Visual of TODO Entered
         private static void ShowTODO()
         {
-            if (USERNAMESET == "" | PASSWORDSET == "" | DATABASESET == "")
-            {
-                Console.WriteLine("User is not set! Sending back to Menu!");
-                s();
-                s();
-                TODOMENU();
-            }
+            UserSetCheck();
 
             string SHOWTODORECEIVED = $"SELECT*FROM {DATABASESET}{USERNAMESET}TODO where USERID != '{USERNAMESET}'";
             bool CHECK = SendSQLCommand(SHOWTODORECEIVED, "YES", "NO");
@@ -609,13 +576,7 @@ namespace Cours6Exercice
         //Exercice 65 Removing element from TODO
         private static void RemoveTODO()
         {
-            if (USERNAMESET == "" | PASSWORDSET == "" | DATABASESET == "")
-            {
-                Console.WriteLine("User is not set! Sending back to Menu!");
-                s();
-                s();
-                TODOMENU();
-            }
+            UserSetCheck();
 
             Console.Write($"Witch one do you want to delete ?:");
             int choice;
@@ -633,13 +594,12 @@ namespace Cours6Exercice
             {
                 Console.WriteLine($"TODO No {choice} Could not be removed from {USERNAMESET} TODO");
             }
-            // string DELETE = $"DELETE FROM {DATABASESET}{USERNAMESET}TODO WHERE ID = {choice}";
-           // SendSQLCommand(DELETE, "YES", "NO");
+
         }
 
         private static bool RemovetodoProc(string id)
         {
-
+            int count = 0;
             try
             {
                 SqlCommand DeleteTodo = new SqlCommand();
@@ -668,13 +628,7 @@ namespace Cours6Exercice
         //send message ?
         private static void SendTODO()
         {
-            if (USERNAMESET == "" | PASSWORDSET == "" | DATABASESET == "")
-            {
-                Console.WriteLine("User is not set! Sending back to Menu!");
-                s();
-                s();
-                TODOMENU();
-            }
+            UserSetCheck();
 
             Console.Write("Send Task to what user ? : ");
             string ReceivingUser = Console.ReadLine().ToUpper();
@@ -689,8 +643,6 @@ namespace Cours6Exercice
             bool CHECK = AddSendodoUserProc(ReceivingUser, TASK);
             CloseConnectionToSQLServ();
 
-            //string TaskAdd = $"INSERT INTO {DATABASESET}{ReceivingUser}TODO VALUES('{TASK}', '{USERNAMESET}')";
-            //bool CHECK = SendSQLCommand(TaskAdd, "YES", "NO");
 
             if (CHECK)
             {
@@ -784,9 +736,6 @@ namespace Cours6Exercice
 
         static void Main(string[] args)
         {
-            USERNAMESET = "";
-            PASSWORDSET = "";
-            DATABASESET = "";
             TODOSqlConn = new SqlConnection();
             TODOSqlConn.ConnectionString = ConfigurationManager.ConnectionStrings["TODODBCON"].ToString();
             TODOMENU();
