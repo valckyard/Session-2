@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TODODBSQL", "TODODBSQL\TODO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cours7Exercice", "Cours7Exercice\Cours7Exercice.csproj", "{29DAAEB0-610A-4DF4-9ACE-1855C52AFE5B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cours6ExerciceBis", "Cours6ExerciceBis\Cours6ExerciceBis.csproj", "{F21240BD-9712-42D0-83A2-9AB53E6708E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{29DAAEB0-610A-4DF4-9ACE-1855C52AFE5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29DAAEB0-610A-4DF4-9ACE-1855C52AFE5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29DAAEB0-610A-4DF4-9ACE-1855C52AFE5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F21240BD-9712-42D0-83A2-9AB53E6708E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F21240BD-9712-42D0-83A2-9AB53E6708E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F21240BD-9712-42D0-83A2-9AB53E6708E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F21240BD-9712-42D0-83A2-9AB53E6708E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -63,21 +63,28 @@ namespace Cours5Exercice
         }
 
         //######################################### Exercice 54  #############################################
-        public static bool SolveMagicSquare(int[,] matrice, int num)
+        private static bool CarreMaj(int[,] matrice, int num)
         {
 
-  
-        
+            // i line j col
+
 
 
             if (num <= 0)
             {
                 return false;
             }
+
+
             for (int i = 0; i < matrice.GetLength(0); i++)
+            {
                 for (int j = 0; j < matrice.GetLength(1); j++) matrice[i, j] = 0;
-            //i = line , j= column
-            matrice[0, matrice.GetLength(1) / 2] = 1;
+                {
+                    matrice[0, matrice.GetLength(1) / 2] = 1;
+                }
+            }
+
+
             for (int i = 0, j = matrice.GetLength(1) / 2, process = 2; process <= num * num; process++)
             {
                 if ((i - 1) > 0 && j + 1 < matrice.GetLength(1) && matrice[i - 1, j + 1] == 0)
@@ -141,14 +148,14 @@ namespace Cours5Exercice
             }
             return true;
         }
-        //**************************************************************** //input: magic squre
-        //output: if the fillings are correct(sum of lines= sum of column          s = sum of crossings) output=true => sucess, else=>fail.
-        static bool test1(int[,] mat, int num)
+       
+
+       private static bool Check1(int[,] matrice, int num)
         {
             int sum = 0;
             for (int i = 0; i < num; i++)
             {
-                sum += mat[0, i];
+                sum += matrice[0, i];
             }
             int temp = 0;
             for (int i = 0; i < num; i++)
@@ -156,7 +163,7 @@ namespace Cours5Exercice
                 temp = 0;
                 for (int j = 0; j < num; j++)
                 {
-                    temp += mat[i, j];
+                    temp += matrice[i, j];
                 }
                 if (temp != sum) return false;
             }
@@ -166,30 +173,30 @@ namespace Cours5Exercice
                 temp = 0;
                 for (int j = 0; j < num; j++)
                 {
-                    temp += mat[j, i];
+                    temp += matrice[j, i];
                 }
                 if (temp != sum) return false;
             }
             temp = 0;
             for (int i = 0; i < num; i++)
             {
-                temp += mat[i, i];
+                temp += matrice[i, i];
             }
             if (temp != sum) return false;
             return true;
         }
-    
 
-//######################################### Exercice 55  #############################################
 
-private static string CharToString()
+        //######################################### Exercice 55  #############################################
+
+        private static string CharToString()
         {
-            char[] Prog = { 'P', 'r', 'o', 'g', 'r', 'a', 'm', 'm', 'a', 't', 'i', 'o', 'n','M', 'o', 'd', 'u', 'l', 'a', 'i', 'r', 'e' };
+            char[] Prog = { 'P', 'r', 'o', 'g', 'r', 'a', 'm', 'm', 'a', 't', 'i', 'o', 'n', 'M', 'o', 'd', 'u', 'l', 'a', 'i', 'r', 'e' };
             string AllTogether = null;
             foreach (char c in Prog.ToArray().Reverse())
             {
                 AllTogether += $"{c}";
-                
+
             }
             return AllTogether;
         }
@@ -198,15 +205,15 @@ private static string CharToString()
 
         private static void SumOfDiagCube()
         {
-            int[,,] array3D = new int[,,] { { { 1, 2, 3 }, { 4, 5, 6 } },{ { 7, 8, 9 }, { 10, 11, 12 } } };
+            int[,,] array3D = new int[,,] { { { 1, 2, 3 }, { 4, 5, 6 } }, { { 7, 8, 9 }, { 10, 11, 12 } } };
             int[,,] m = new int[3, 3, 3];
             int sum = 0;
             int n = 1;
 
             for (int x = 0; x < 3; x++)
-            for (int y = 0; y < 3; y++)
-            for (int z = 0; z < 3; z++)
-                m[x, y, z] = n++;
+                for (int y = 0; y < 3; y++)
+                    for (int z = 0; z < 3; z++)
+                        m[x, y, z] = n++;
 
 
             sum = m[0, 0, 0] + m[1, 1, 1] + m[2, 2, 2];
@@ -231,6 +238,13 @@ private static string CharToString()
 
         private static void ExerciceSwitch()
         {
+
+            Console.WriteLine($" 1 - Name Render");
+            Console.WriteLine($" 2 - Users Render");
+            Console.WriteLine($" 3 - Pubmed");
+            Console.WriteLine($" 4 - CarreMagique");
+            Console.WriteLine($" 5 - ChartoString");
+            Console.Write("Choice : ");
             int x;
             while (int.TryParse(Console.ReadLine(), out x) == false)
             {
@@ -259,23 +273,23 @@ private static string CharToString()
                     }
                     break;
                 case 4:
-                    int num = int.Parse(Console.ReadLine());
-                    int[,] mat = new int[num, num];
-                    SolveMagicSquare(mat, num);
-                    if (test1(mat, num) == false) { Console.WriteLine("FAILED!!!"); }
+                    int Number = int.Parse(Console.ReadLine());
+                    int[,] MaMatrice = new int[Number, Number];
+                    CarreMaj(MaMatrice, Number);
+                    if (Check1(MaMatrice, Number) == false) { Console.WriteLine("FAILED!!!"); }
                     else Console.WriteLine("SUCCESS!!!");
                     break;
                 case 5:
-                {
-                    InitializeChartoString();
-                }
+                    {
+                        InitializeChartoString();
+                    }
                     break;
                 case 6:
-                {
-                    
-                }
+                    {
+
+                    }
                     break;
-         
+
             }
             Console.WriteLine();
             ExerciceSwitch();
