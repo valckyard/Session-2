@@ -1,11 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
-
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+using System.ComponentModel.Design;
+using System.Web.UI.WebControls;
+//using System.Windows.Forms;
+using Microsoft.TeamFoundation.TestManagement.Client;
+using System.Collections;
+//using TreeNode  System.Web.UI.WebControls;
 namespace Cours8Exercice
 {
 
+    //public class Node
+    //{
+    //    public int Index { get; set; }
+    //    public List<Node> neighbors;
+    //    public Node(int index)
+    //    {
+    //        Index = index;
+    //        neighbors = new List<Node>();
+    //    }
+    //    public void AddNeighbor(int index)
+    //    {
+    //        neighbors.Add(new Node(index));
+    //    }
+    //}
+
+    //public class BFS
+    //{
+
+    //    public void BFSearch(Node Root)
+    //    {
+    //        Queue<Node> queue = new Queue<Node>();
+    //        queue.Enqueue(Root);
+    //        while (queue.Count > 0)
+    //        {
+    //            Node tempNode = queue.Dequeue();
+    //            Console.WriteLine("Node number: " + tempNode.Index);
+    //            foreach (var item in tempNode.neighbors)
+    //            {
+    //                queue.Enqueue(item);
+    //            }
+    //        }
+    //    }
+    //}
     enum Lettres
     {
         a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z
@@ -27,37 +67,7 @@ namespace Cours8Exercice
     class Program
     {
 
-        //################################################################### PEOPLE GRAPH ###############################################################
-        //################################################################### PEOPLE GRAPH ###############################################################
-        //################################################################### PEOPLE GRAPH ###############################################################
-
-
-        private static void InitRenderPeopleGraph()
-        {
-            s();
-            s();
-            Console.WriteLine(@"                                               |-KAREN-|");
-            Console.WriteLine(@"                                              /         \");
-            Console.WriteLine(@"                                             /           \");
-            Console.WriteLine(@"                                   |MAXIME -|             |-CHARLES|");
-            Console.WriteLine(@"                                             \           /");
-            Console.WriteLine(@"                                              \         /");
-            Console.WriteLine(@"                                               |--BOB--|");
-            Console.WriteLine(@"                                                   |");
-            Console.WriteLine(@"                                                   |");
-            Console.WriteLine(@"                                              |ALEXANDRE|");
-        }
-        
-        
-        //################################################################### LETTER PRIORITY CREATION/METHOD ###############################################################
-        //################################################################### LETTER PRIORITY CREATION/METHOD ###############################################################
-        //################################################################### LETTER PRIORITY CREATION/METHOD ###############################################################
-
-        //////////STATIC/////// Init Switch7
-        private static List<LetterValue> CompairLVal;
-
-
-        private static List<LetterValue> CreateVal()
+        public static List<LetterValue> CreateVal()
         {
             List<LetterValue> LVal = new List<LetterValue>();
             int Val = 26;
@@ -69,112 +79,7 @@ namespace Cours8Exercice
             return LVal;
         }
 
-
-        private static string LetterLowerWin(string one, string two, bool reverse)
-        {
-            int S1 = 0;
-            int S2 = 0;
-            foreach (var L in CompairLVal)
-            {
-                if (one == L.Letter.ToString())
-                {
-                    S1 = L.Value;
-                }
-                if (two == L.Letter.ToString())
-                {
-                    S2 = L.Value;
-                }
-            }
-            if (reverse == true) // Return highest letter
-            {
-                if (S1 < S2)
-                    return one;
-                else
-                    return two;
-            }
-            else
-            {
-                if (S1 < S2) // return Lowest letter
-                    return two;
-                else
-                    return one;
-            }
-        }
-
-        private static void InitCompairList()
-        {
-            CompairLVal = CreateVal();
-
-
-            foreach (var val in CompairLVal)
-            {
-                Console.Write($"({val.Letter},");
-                Console.Write($"{val.Value})");
-                Console.WriteLine();
-            }
-        }
-
-        private static void InitCompairTest()
-        {
-            bool Reverse = false;
-            int x;
-            Console.WriteLine("Alphabetical Order Strength         - 1");
-            Console.WriteLine("Reverse Alphabetical Order Strength - 2");
-            Console.Write("Choice : ");
-            do
-            {
-                while (int.TryParse(Console.ReadLine(), out x) == false) { };
-            } while (x < 1 | x > 2);
-            if (x != 1) Reverse = true;
-
-            s();
-
-            Console.Write("First Letter : ");
-            string one = "";
-            do
-            {
-                one = Console.ReadLine().ToLower();
-                InputCheck(ref one);
-
-            } while (one.Count() > 1 | one.Count() < 1);
-
-            s();
-
-            Console.Write("Second Letter : ");
-            string two = "";
-            do
-            {
-                two = Console.ReadLine().ToLower();
-                InputCheck(ref two);
-
-            } while (one.Count() > 1 | one.Count() < 1);
-
-            s();
-
-            string Result = LetterLowerWin(one, two, Reverse);
-            Console.WriteLine($"Reverse = {Reverse} => {one} VS {two}  .... Winner {Result} !");
-
-        }
-
-
-
-
-
-        private static void InputCheck(ref string x)
-        {
-            if (x.Any(ch => !Char.IsLetter(ch)) | x == "")
-            {
-                Console.WriteLine("Invalid Input!");
-                x = "";
-            }
-
-        }
-
-        //################################################################### GRAPH ###############################################################
-        //################################################################### GRAPH ###############################################################
-        //################################################################### GRAPH ###############################################################
-
-
+        //Exercice 81 Add Key values
         private static Dictionary<string, List<string>> DictionnaryGraph()
         {
             Dictionary<string, List<string>> Graphe = new Dictionary<string, List<string>>();
@@ -186,48 +91,107 @@ namespace Cours8Exercice
             return Graphe;
         }
 
-        private static void InitDictionnaryGraphRender()
-        {
-            Console.WriteLine(@" Dictionary<string, List<string>> Graphe = new Dictionary<string, List<string>>();");
-            Console.WriteLine("  Graphe.Add(\"a\", new List<string> { \"b\", \"d\" });");
-            Console.WriteLine("  Graphe.Add(\"b\", new List<string> { \"a\", \"c\" });");
-            Console.WriteLine("  Graphe.Add(\"c\", new List<string> { \"b\", \"d\", \"e\" });");
-            Console.WriteLine("  Graphe.Add(\"d\", new List<string> { \"a\", \"c\" });");
-            Console.WriteLine("  Graphe.Add(\"e\", new List<string> { \"c\" });");
 
+        /// BFS FUCKED UP
+        static Stack<string> Tree = new Stack<string>();
+
+        static List<string> Visited = new List<string>();
+        private static Stack<string> BFSStruct(Dictionary<string, List<string>> Dic, List<string> Root, int level)
+        {
+            List<string> listchilds = new List<string>();
+            Console.Write($" LEVEL : {level}");
+
+
+
+            for (int w = 0; w < Root.Count; w++)
+                foreach (var key in Dic)
+                {
+                    if (key.Key == Root[w])
+                    {
+                        Tree.Push(Root[w]);
+                        Visited.Add(Root[w]);
+
+                        Console.Write($"(Key {key.Key}|");
+                        for (int x = 0; x < key.Value.Count(); ++x)
+                        {
+                            if (!Tree.Contains(key.Value[x]))
+                            {
+
+                                listchilds.Add(key.Value[x]); // a c
+                                Console.Write($" {key.Value[x]},");
+                            }
+                        }
+                    }
+
+
+                }
+            Console.Write($")  ");
+            Root = new List<string>();
+            bool Gate = true;
+            ++level;
+
+            if (Visited.Count <= Dic.Count)
+                while (Gate == true)
+                {
+
+                    foreach (var s in listchilds)
+                    {
+                        if (!Visited.Contains(s))
+                        {
+                            Root.Add(s);
+                        }
+                        else
+                        {
+                            Gate = false;
+                        }
+                    }
+                    return BFSStruct(Dic, Root, level);
+                }
+            else
+            {
+                return Tree;
+            }
+
+            return Tree;
         }
 
 
 
-        //################################################################### STATIC ###############################################################
-        //################################################################### STATIC ###############################################################
-        //################################################################### STATIC ###############################################################
+        private static node ChildofChilds(Dictionary<string, List<string>> Dic, List<string> Childs, ref int level, ref List<string> Duplicate)
+        {
+            List<string> NewChilds = new List<string>();
+            foreach (var ChildsASKey in Childs)
+                foreach (var key in Dic)
+                {
+                    if (key.Key == ChildsASKey)
 
+                        for (int x = 0; x < key.Value.Count(); ++x)
+                        {
+                            if (!Duplicate.Contains(key.Value[x]))
+                            {
+                                Duplicate.Add(key.Value[x]);
+                                NewChilds.Add(key.Value[x]);
+                            }
+                        }
+                }
+            return (new node() { level = level, childs = NewChilds });
+        }
 
-        private static Stack<string> StackMovement = new Stack<string>();
+        /////////////BFS
         private static List<string> NodeOrderList = new List<string>();
-        private static Queue<string> QueueMovement = new Queue<string>();
-
-
-
-        //################################################################### BFS ##################################################################
-        //################################################################### BFS ##################################################################
-        //################################################################### BFS ##################################################################
-
-
-
+        private static Queue<string> RootAndChilds = new Queue<string>();
         private static Queue<string> BFSClean(Dictionary<string, List<string>> Dic, string Root)
         {
             if (Dic.Count == NodeOrderList.Count)
             {
 
-                return QueueMovement;
+                return RootAndChilds;
             }
 
             else
             {
 
-                QueueMovement.Enqueue(Root);
+                RootAndChilds.Enqueue(Root);
                 NodeOrderList.Add(Root);
                 foreach (var key in Dic)
                 {
@@ -238,13 +202,13 @@ namespace Cours8Exercice
 
                         for (int x = 0; x < key.Value.Count; ++x)
                         {
-                            if (!QueueMovement.Contains(key.Value[x])) { Console.Write($" {key.Value[x]},"); QueueMovement.Enqueue(key.Value[x]); }
+                            if (!RootAndChilds.Contains(key.Value[x])) { Console.Write($" {key.Value[x]},"); RootAndChilds.Enqueue(key.Value[x]); }
                         }
                     }
                 }
                 Console.Write($")    ");
 
-                foreach (var elem in QueueMovement)
+                foreach (var elem in RootAndChilds)
                 {
                     if (!NodeOrderList.Contains(elem))
                     {
@@ -258,65 +222,9 @@ namespace Cours8Exercice
         }
 
 
-        private static void BFSNormalInit()
-        {
-            NodeOrderList = new List<string>();
-            QueueMovement = new Queue<string>();
-
-            Dictionary<string, List<string>> Graphe = DictionnaryGraph();
-
-            Console.WriteLine("~~~~PARCOURS BFS~~~~~");
-            Queue<string> Retour = BFSClean(Graphe, "b");
-
-
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine("Simplement....");
-            foreach (var elem in NodeOrderList)
-            {
-                Console.Write($"{elem},");
-            }
-            Console.WriteLine();
-            Console.WriteLine();
-
-        }
-
-        private static void BFSReverseInit()
-        {
-            NodeOrderList = new List<string>();
-            QueueMovement = new Queue<string>();
-
-
-            Dictionary<string, List<string>> GrapheReversed = DictionnaryGraph();
-
-
-            foreach (var key in GrapheReversed.ToList())
-            {
-                key.Value.Sort();
-                key.Value.Reverse();
-            }
-
-
-
-            Console.WriteLine("~~~~PARCOURS BFS Reverse~~~~~");
-            Queue<string> RetourRev = BFSClean(GrapheReversed, "b");
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine("Simplement....");
-            foreach (var elem in NodeOrderList)
-            {
-                Console.Write($"{elem},");
-            }
-            Console.WriteLine();
-            Console.WriteLine();
-        }
-        //################################################################### DFS ##################################################################
-        //################################################################### DFS ##################################################################
-        //################################################################### DFS ##################################################################
-
-
-
-        private static Stack<string> DFSClean(Dictionary<string, List<string>> Dic, string CurrentRoot)
+        ///////DFS
+        private static Stack<string> StackMovement = new Stack<string>();
+        private static Stack<string> DFSClean(Dictionary<string, List<string>> Dic, string CurrentRoot, bool ReverseAlpha)
         {
             if (Dic.Count == NodeOrderList.Count)
             {
@@ -355,7 +263,7 @@ namespace Cours8Exercice
                                 StackMovement.Push(key.Value[x]);
                                 CurrentRoot = key.Value[x];
 
-                                return DFSClean(Dic, CurrentRoot);
+                                return DFSClean(Dic, CurrentRoot, ReverseAlpha);
                             }
 
                         }
@@ -376,155 +284,173 @@ namespace Cours8Exercice
                 Console.Write($" All Nodes Used END )   ");
             }
                 CurrentRoot = NodeOrderList[NodeOrderList.Count - 2];
-            return DFSClean(Dic, CurrentRoot);
+            return DFSClean(Dic, CurrentRoot, ReverseAlpha);
+        }
+  
+
+        private static string LetterLowerWin(string one, string two, bool reverse)
+        {
+            int S1 = 0;
+            int S2 = 0;
+            foreach (var L in CompairLVal)
+            {
+                if (one == L.Letter.ToString())
+                {
+                    S1 = L.Value;
+                }
+                if (two == L.Letter.ToString())
+                {
+                    S2 = L.Value;
+                }
+            }
+            if (reverse == true) // Return highest letter
+            {
+                if (S1 < S2)
+                    return one;
+                else
+                    return two;
+            }
+            else
+            {
+                if (S1 > S2) // return Lowest letter
+                    return one;
+                else
+                    return two;
+            }
         }
 
-        private static void DFSNormalInit()
+
+
+        static List<LetterValue> CompairLVal;
+        static void Main(string[] args)
         {
+            CompairLVal = CreateVal();
+
+
+            foreach (var val in CompairLVal)
+            {
+                Console.Write($"({val.Letter},");
+                Console.Write($"{val.Value})");
+                Console.WriteLine();
+            }
+
+
+            Dictionary<string, List<string>> GrapheEx = DictionnaryGraph();
+            Stack<string> Order = new Stack<string>();
+            Order.Push("e");
+            Order.Push("d");
+            Order.Push("c");
+            Order.Push("a");
+            Order.Push("b");
+
+
+            //FUCKED UP BFS
+            //List<string> RootTab = new List<string> { "b" };
+            //Stack<string> Processed = BFSStruct(GrapheEx, RootTab, 0);
+
+            //foreach (var node in Processed)
+            //{
+
+            //    foreach (var childs in node)
+            //    {
+            //        Console.Write($"{childs},");
+            //    }
+            //    Console.WriteLine(node);
+            //    Console.WriteLine();
+            //}
+
+            ///////////////////////////BFS//////////////////////// 85
+
             NodeOrderList = new List<string>();
-            StackMovement = new Stack<string>();
+            RootAndChilds = new Queue<string>();
 
+            Console.WriteLine("~~~~PARCOURS BFS~~~~~");
+            Queue<string> Retour = BFSClean(GrapheEx, "b");
 
-
-            Dictionary<string, List<string>> Graphe = DictionnaryGraph();
-
-
-            Console.WriteLine("~~~~PARCOURS DFS~~~~~");
-            Stack<string> ReturnPath = DFSClean(Graphe, "b");
 
             Console.WriteLine();
             Console.WriteLine();
-
-
             Console.WriteLine("Simplement....");
             foreach (var elem in NodeOrderList)
             {
                 Console.Write($"{elem},");
             }
-
-
             Console.WriteLine();
             Console.WriteLine();
 
-        }
 
-        private static void DFSReverseInit()
-        {
+            //84 BFS REVERSED
+
+            Dictionary<string, List<string>> GrapheExRev = DictionnaryGraph();
+
+
+            foreach (var key in GrapheExRev.ToList())
+            {
+                key.Value.Sort();
+                key.Value.Reverse();
+            }
+
+            NodeOrderList = new List<string>();
+            RootAndChilds = new Queue<string>();
+
+            Console.WriteLine("~~~~PARCOURS BFS Reverse~~~~~");
+            Queue<string> RetourRev = BFSClean(GrapheExRev, "b");
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Simplement....");
+            foreach (var elem in NodeOrderList)
+            {
+                Console.Write($"{elem},");
+            }
+            Console.WriteLine();
+            Console.WriteLine();
+
+
+
+
+            ////DFS
+            NodeOrderList = new List<string>();
+            StackMovement = new Stack<string>();
+            Dictionary<string, List<string>> GrapheExForDFS = DictionnaryGraph();
+            Console.WriteLine("~~~~PARCOURS DFS~~~~~");
+            Stack<string> ReturnPath = DFSClean(GrapheExForDFS, "b", false);
+
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Simplement....");
+            foreach (var elem in NodeOrderList)
+            {
+                Console.Write($"{elem},");
+            }
+            Console.WriteLine();
+            Console.WriteLine();
+
+            //84 DFS REVERSED
 
             NodeOrderList = new List<string>();
             StackMovement = new Stack<string>();
+            Dictionary<string, List<string>> GrapheExForDFSRev = DictionnaryGraph();
 
 
-            Dictionary<string, List<string>> Graphe = DictionnaryGraph();
-
-
-            foreach (var key in Graphe.ToList())
+            foreach (var key in GrapheExForDFSRev.ToList())
             {
                 key.Value.Sort();
                 key.Value.Reverse();
             }
 
             Console.WriteLine("~~~~PARCOURS DFS REV~~~~~");
-            Stack<string> ReturnPathRev = DFSClean(Graphe, "b");
-
-
+            Stack<string> ReturnPathRev = DFSClean(GrapheExForDFSRev, "b", true);
             Console.WriteLine();
             Console.WriteLine();
-
-
             Console.WriteLine("Simplement....");
             foreach (var elem in NodeOrderList)
             {
                 Console.Write($"{elem},");
             }
-
-
             Console.WriteLine();
             Console.WriteLine();
-        }
 
-        //################################################################### SWITCH ###############################################################
-        //################################################################### SWITCH ###############################################################
-        //################################################################### SWITCH ###############################################################
 
-        private static void ExSwitch()
-        {
-
-            do
-            {
-                Console.WriteLine($"        ╔═══════════════╦════════════════════════════════════════════════════╗");
-                Console.WriteLine($"        ║TODO OPTIONS 1 ║ BFS NORMAL                Exercice 84/86           ║");
-                Console.WriteLine($"        ║             2 ║ BFS REVERSE               Ecercice 84/86           ║");
-                Console.WriteLine($"        ║             3 ║ DFS NORMAL                Exercice 83/85           ║");
-                Console.WriteLine($"        ║             4 ║ DFS REVERSE               EXercice 83/85           ║");
-                Console.WriteLine($"        ║             5 ║ RENDER DICTIONNARY GRAPH  Exercice 81              ║");
-                Console.WriteLine($"        ║             6 ║ RENDER GRAPH PEOPLE       Exercice 82              ║");
-                Console.WriteLine($"        ║             7 ║ LETTER VALUES IMPLEMENTATION                       ║");
-                Console.WriteLine($"        ║             8 ║ TEST LETTER STRENGTH LOWER HIGHER                  ║");
-                Console.WriteLine($"        ╚═══════════════╩════════════════════════════════════════════════════╝");
-                Console.Write($"            Choice :");
-                int choice;
-                do
-                {
-                    while (int.TryParse(Console.ReadLine(), out choice) == false) ;
-                } while (choice < 1 | choice > 8);
-                Console.Clear();
-                switch (choice)
-                {
-                    case 1:
-                        BFSNormalInit();
-                        s();
-                        s();
-                        break;
-                    case 2:
-                        BFSReverseInit();
-                        s();
-                        s();
-                        break;
-                    case 3:
-                        DFSNormalInit();
-                        s();
-                        s();
-                        break;
-                    case 4:
-                        DFSReverseInit();
-                        s();
-                        s();
-                        break;
-                    case 5:
-                        InitDictionnaryGraphRender();
-                        s();
-                        s();
-                        break;
-                    case 6:
-                        InitRenderPeopleGraph();
-                        s();
-                        s();
-                        break;
-                    case 7:
-                        InitCompairList();
-                        s();
-                        s();
-                        break;
-                    case 8:
-                        InitCompairTest();
-                        s();
-                        s();
-                        break;
-                }
-            } while (true);
-
-        }
-
-        private static void s()
-        {
-            Console.WriteLine();
-        }
-
-       
-        static void Main(string[] args)
-        {
-            ExSwitch();
 
         }
     }
