@@ -599,7 +599,7 @@ namespace Cours6Exercice
 
         private static bool RemovetodoProc(string id)
         {
-            int count = 0;
+           // int count = 0;
             try
             {
                 SqlCommand DeleteTodo = new SqlCommand();
