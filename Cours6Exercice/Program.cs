@@ -29,8 +29,14 @@ namespace Cours6Exercice
     }
     internal class DatabaseTODO
     {
-        string DatabaseName { get; set; }
-        List<string> Utilsateurs { get; set; }
+        internal string DatabaseName { get; set; }
+        internal List<string> Utilsateurs  { get; set; }
+
+        public DatabaseTODO(string name, List<string> users)
+        {
+            Utilsateurs = new List<string>(users);
+           DatabaseName = name;
+        }
     }
 
 
@@ -55,6 +61,7 @@ namespace Cours6Exercice
 
         internal static bool OpenConnectionToSQLServ()
         {
+
             try
             {
                 TODOSqlConn.Open();

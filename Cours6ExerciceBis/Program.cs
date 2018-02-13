@@ -1,46 +1,73 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Cours6ExerciceBis
 {
     class Program
     {
-        private static Random R = new Random();
+        private static readonly Random R = new Random();
+
+
+
+        //############################################ SIMULER LANCERS #############################################################//
+        //############################################ SIMULER LANCERS #############################################################//
+        //############################################ SIMULER LANCERS #############################################################//
+
+
+
+
 
         //Exercice 66
         private static List<int> SimulerXLancers(int n)
         {
-            List<int> Results = new List<int>();
+            List<int> results = new List<int>();
 
             for(int x = 0;  x< n;++x)
             {
-                Results.Add(R.Next(1, 7));
+                results.Add(R.Next(1, 7));
             }
-            return Results;
+            return results;
         }
 
-        private static List<int> initializeXLancers()
+
+
+        //init lancers
+        private static List<int> InitializeXLancers()
         {
             Console.Write("Combien de fois lancer le de ? :");
             int x;
-            while (int.TryParse(Console.ReadLine(), out x) == false) ;
+            while (int.TryParse(Console.ReadLine(), out x) == false)
+            {
+            }
 
-            List<int> Results =SimulerXLancers(x);
-            foreach(int i in Results)
+            List<int> results =SimulerXLancers(x);
+            foreach(int i in results)
             {
                 Console.Write($"{i},");
             }
-            return Results;
+            return results;
 
         }
 
+
+
+
+
+
+        //############################################ DES PIPE #############################################################//
+        //############################################ DES PIPE #############################################################//
+        //############################################ DES PIPE #############################################################//
+
+
+
+
+
+
         //Exercice 67
-        private static bool DePipe(List<int> Lancers)
+        private static bool DePipe(List<int> lancers)
         {
-            if (Lancers.Count < 30)
+            if (lancers.Count < 30)
             {
                 Console.Write("Pas assez de donnees pour evaluer si le de est Pipe!");
                 return false;
@@ -48,7 +75,7 @@ namespace Cours6ExerciceBis
             else
             {
                 int un = 0, deux = 0, trois = 0, quatre = 0, cinq = 0, six = 0;
-               foreach(int i in Lancers)
+               foreach(int i in lancers)
                 {
                     switch(i)
                     {
@@ -72,13 +99,13 @@ namespace Cours6ExerciceBis
                             continue;
 
                     }
-                    if((((un / Lancers.Count) * 100 > Lancers.Count * 0.2) | ((deux / Lancers.Count) * 100 > Lancers.Count * 0.2) | ((trois / Lancers.Count) * 100 > Lancers.Count * 0.2)
-                        | ((quatre / Lancers.Count) * 100 > Lancers.Count * 0.2) | ((cinq / Lancers.Count) * 100 > Lancers.Count * 0.2) | ((six / Lancers.Count) * 100 > Lancers.Count * 0.2)))
+                    if((((un / lancers.Count) * 100 > lancers.Count * 0.2) | ((deux / lancers.Count) * 100 > lancers.Count * 0.2) | ((trois / lancers.Count) * 100 > lancers.Count * 0.2)
+                        | ((quatre / lancers.Count) * 100 > lancers.Count * 0.2) | ((cinq / lancers.Count) * 100 > lancers.Count * 0.2) | ((six / lancers.Count) * 100 > lancers.Count * 0.2)))
                     {
                         return true;
                     }
-                    else if ((((un / Lancers.Count) * 100 < Lancers.Count * 0.09) | ((deux / Lancers.Count) * 100 < Lancers.Count * 0.09) | ((trois / Lancers.Count) * 100 < Lancers.Count * 0.09)
-                        | ((quatre / Lancers.Count) * 100 < Lancers.Count * 0.09) | ((cinq / Lancers.Count) * 100 < Lancers.Count * 0.09) | ((six / Lancers.Count) * 100 < Lancers.Count * 0.09)))
+                    else if ((((un / lancers.Count) * 100 < lancers.Count * 0.09) | ((deux / lancers.Count) * 100 < lancers.Count * 0.09) | ((trois / lancers.Count) * 100 < lancers.Count * 0.09)
+                        | ((quatre / lancers.Count) * 100 < lancers.Count * 0.09) | ((cinq / lancers.Count) * 100 < lancers.Count * 0.09) | ((six / lancers.Count) * 100 < lancers.Count * 0.09)))
                     {
                         return true;
                     }
@@ -90,6 +117,17 @@ namespace Cours6ExerciceBis
                 return false;
             }
         }
+
+
+
+
+
+        //############################################ EXERCICES SWITCH #############################################################//
+        //############################################ EXERCICES SWITCH #############################################################//
+        //############################################ EXERCICES SWITCH #############################################################//
+
+
+
 
         private static void ExerciceSwitch()
         {
@@ -113,13 +151,13 @@ namespace Cours6ExerciceBis
             {
                 case 1:
                     {
-                        initializeXLancers();
+                        InitializeXLancers();
                     }
                     break;
                 case 2:
                     {
-                       List<int> Results = initializeXLancers();
-                        bool loadedques = DePipe(Results);
+                       List<int> results = InitializeXLancers();
+                        bool loadedques = DePipe(results);
                         Console.WriteLine($"Are these dices loaded : {loadedques}");
                     }
                     break;
@@ -127,7 +165,7 @@ namespace Cours6ExerciceBis
             ExerciceSwitch();
         }
 
-        static void Main(string[] args)
+        static void Main()
         {
             ExerciceSwitch();
         }

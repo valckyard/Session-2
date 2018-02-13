@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace Cours7Exercice
@@ -10,92 +8,121 @@ namespace Cours7Exercice
     class Program
     {
 
+
+
+        //############################################ DYNAMIC SORT #############################################################//
+        //############################################ DYNAMIC SORT #############################################################//
+        //############################################ DYNAMIC SORT #############################################################//
+
+
+
+
         // Exercice 71 sort a dynamic list of int or double
-        private static List<T> SortMyList<T>(List<T> TheList1)
+        private static List<T> SortMyList<T>(List<T> theList1)
         {
 
-            if ((TheList1.GetType() == typeof(List<int>)) | (TheList1.GetType() == typeof(List<double>)))
+            if ((theList1.GetType() == typeof(List<int>)) | (theList1.GetType() == typeof(List<double>)))
             {
 
-                dynamic count = TheList1.Count();
+              //  dynamic count = theList1.Count();
                 bool trie = false;
 
                 while (!trie)
                 {
                     trie = true;
-                    for (dynamic i = TheList1.Count - 1; i > 0; i--)
+                    for (dynamic i = theList1.Count - 1; i > 0; i--)
                     {
                         for (dynamic j = 0; j <= i - 1; j++)
                         {
-                            if (TheList1[j] > TheList1[j + 1])
+                            if (theList1[j] > theList1[j + 1])
                             {
-                                dynamic highValue = TheList1[j];
-                                TheList1[j] = TheList1[j + 1];
+                                dynamic highValue = theList1[j];
+                                theList1[j] = theList1[j + 1];
 
-                                TheList1[j + 1] = highValue;
+                                theList1[j + 1] = highValue;
                                 trie = false;
                             }
                         }
                     }
                 }
-                return TheList1;
+                return theList1;
             }
-            else
-            {
-                Console.WriteLine("FU c est pas un int ou un double");
-                return TheList1;
-            }
+
+            Console.WriteLine("FU c est pas un int ou un double");
+            return theList1;
         }
 
+
+
+
+        //init dynamuc 
         private static void InitializeDyna()
         {
             Console.WriteLine("Sortie double trie :");
             List<double> test1 = new List<double> { 1.2222, 2.11111, 54.1, 3.6, 6.2, 3.2, 1.111, 3.2 };
-            List<double> SortieTest1 = SortMyList(test1);
-            foreach (var d in SortieTest1)
+            List<double> sortieTest1 = SortMyList(test1);
+            foreach (var d in sortieTest1)
             {
                 Console.Write($"{d},");
             }
-            s();
-            s();
+            S();
+            S();
             Console.WriteLine("Sortie Int trie :");
             List<int> test2 = new List<int> { 55, 2, 12, 111, 2234, 11, 1, 23, 77, 23, 19, 7, 2, 1222 };
-            List<int> SortieTest2 = SortMyList(test2);
-            foreach (var i in SortieTest2)
+            List<int> sortieTest2 = SortMyList(test2);
+            foreach (var i in sortieTest2)
             {
                 Console.Write($"{i},");
             }
-            s();
+            S();
         }
+
+
+
 
         //Exercice 72
+        //Create name List
         private static List<string> ListNomsLongue()
         {
-            string OneLine;
-            List<string> Noms = new List<string>();
-            StreamReader SanchoBobReadsText = new StreamReader("names.txt"); //32868 names that 5 or more baby had been given in USA in 2016
-            while ((OneLine = SanchoBobReadsText.ReadLine()) != null)
+            string oneLine;
+            List<string> noms = new List<string>();
+            StreamReader sanchoBobReadsText = new StreamReader("names.txt"); //32868 names that 5 or more baby had been given in USA in 2016
+            while ((oneLine = sanchoBobReadsText.ReadLine()) != null)
             {
-                string[] SplittedLine = OneLine.Split(',');             //splitting at , i dont want the rest
-                Noms.Add(SplittedLine[0]);
+                string[] splittedLine = oneLine.Split(',');             //splitting at , i dont want the rest
+                noms.Add(splittedLine[0]);
             }
-            return Noms;
+            return noms;
         }
 
-        private static List<string> FiltrerNoms(List<string> Noms)
+
+
+
+        //############################################ NAME FILTER #############################################################//
+        //############################################ NAME FILTER #############################################################//
+        //############################################ NAME FILTER #############################################################//
+
+
+
+
+        //name Filter
+        private static List<string> FiltrerNoms(List<string> noms)
         {
-            List<string> Copynoms = Noms;
-            foreach (string s in Copynoms.ToList())
+            List<string> copynoms = noms;
+            foreach (string s in copynoms.ToList())
             {
                 if (s.Count() < 8)
                 {
-                    Copynoms.Remove(s);
+                    copynoms.Remove(s);
                 }
 
             }
-            return Copynoms;
+            return copynoms;
         }
 
+
+
+        //Init name filters
         private static void InitializeFiltrerNoms()
         {
             List<string> noms = ListNomsLongue();
@@ -106,7 +133,16 @@ namespace Cours7Exercice
             }
         }
 
-        private static void SwitchExercices()
+
+
+
+        //############################################ Exercise Switch #############################################################//
+        //############################################ Exercise Switch #############################################################//
+        //############################################ Exercise Switch #############################################################//
+
+
+
+        private static void Switch()
         {
             Console.WriteLine("1 - Dynamic list of int and double");
             Console.WriteLine("2 - Name Filtered");
@@ -116,7 +152,7 @@ namespace Cours7Exercice
             {
                 if (x < 1 | x > 2)
                 {
-                    SwitchExercices();
+                    Switch();
                 }
                 Console.Clear();
             }
@@ -128,28 +164,33 @@ namespace Cours7Exercice
                 case 1:
                     {
                         InitializeDyna();
-                        s();
-                        s();
+                        S();
+                        S();
                     }
                     break;
                 case 2:
                     {
                         InitializeFiltrerNoms();
-                        s();
-                        s();
+                        S();
+                        S();
                     }
                     break;
             }
-            SwitchExercices();
+            Switch();
         }
 
-        private static void s()
+
+
+        private static void S()
         {
             Console.WriteLine();
         }
-        static void Main(string[] args)
+
+
+
+        static void Main()
         {
-            SwitchExercices();
+            Switch();
 
         }
     }

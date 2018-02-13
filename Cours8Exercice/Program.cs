@@ -6,14 +6,14 @@ using System.Linq;
 namespace Cours8Exercice
 {
 
-    enum Lettres
+    enum Letters
     {
         a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z
     }
 
     class LetterValue
     {
-        public Lettres Letter { get; set; }
+        public Letters Letter { get; set; }
         public int Value { get; set; }
     }
 
@@ -34,8 +34,8 @@ namespace Cours8Exercice
 
         private static void InitRenderPeopleGraph()
         {
-            s();
-            s();
+            S();
+            S();
             Console.WriteLine(@"                                               |-KAREN-|");
             Console.WriteLine(@"                                              /         \");
             Console.WriteLine(@"                                             /           \");
@@ -53,60 +53,67 @@ namespace Cours8Exercice
         //################################################################### LETTER PRIORITY CREATION/METHOD ###############################################################
         //################################################################### LETTER PRIORITY CREATION/METHOD ###############################################################
 
-        //////////STATIC/////// Init Switch7
-        private static List<LetterValue> CompairLVal;
+        //////////STATIC/////// Init Switch/////////
+        private static List<LetterValue> _compairLVal;
+        ////////////////////////////////////////////
 
 
+
+
+        //############# Create compair file for letters ###################//
         private static List<LetterValue> CreateVal()
         {
-            List<LetterValue> LVal = new List<LetterValue>();
-            int Val = 26;
+            List<LetterValue> lVal = new List<LetterValue>();
+            int val = 26;
             for (int x = 0; x < 26; ++x)
             {
-                LVal.Add(new LetterValue() { Letter = (Lettres)x, Value = Val });
-                --Val;
+                lVal.Add(new LetterValue() { Letter = (Letters)x, Value = val });
+                --val;
             }
-            return LVal;
+            return lVal;
         }
 
 
+
+
+        //##################### Compair letters func###############################//
         private static string LetterLowerWin(string one, string two, bool reverse)
         {
-            int S1 = 0;
-            int S2 = 0;
-            foreach (var L in CompairLVal)
+            int s1 = 0;
+            int s2 = 0;
+            foreach (var L in _compairLVal)
             {
                 if (one == L.Letter.ToString())
                 {
-                    S1 = L.Value;
+                    s1 = L.Value;
                 }
                 if (two == L.Letter.ToString())
                 {
-                    S2 = L.Value;
+                    s2 = L.Value;
                 }
             }
             if (reverse == true) // Return highest letter
             {
-                if (S1 < S2)
+                if (s1 < s2)
                     return one;
-                else
-                    return two;
+                return two;
             }
-            else
-            {
-                if (S1 < S2) // return Lowest letter
-                    return two;
-                else
-                    return one;
-            }
+
+            if (s1 < s2) // return Lowest letter
+                return two;
+            return one;
         }
 
+
+
+
+        //######################### Init letter comparaison Render#########################//
         private static void InitCompairList()
         {
-            CompairLVal = CreateVal();
+            _compairLVal = CreateVal();
 
 
-            foreach (var val in CompairLVal)
+            foreach (var val in _compairLVal)
             {
                 Console.Write($"({val.Letter},");
                 Console.Write($"{val.Value})");
@@ -114,20 +121,30 @@ namespace Cours8Exercice
             }
         }
 
+
+
+
+        //############################################ LETTER COMPAIR TEST #############################################################//
+        //############################################ LETTER COMPAIR TEST #############################################################//
+        //############################################ LETTER COMPAIR TEST #############################################################//
+
+
+
+
         private static void InitCompairTest()
         {
-            bool Reverse = false;
+            bool reverse = false;
             int x;
             Console.WriteLine("Alphabetical Order Strength         - 1");
             Console.WriteLine("Reverse Alphabetical Order Strength - 2");
             Console.Write("Choice : ");
             do
             {
-                while (int.TryParse(Console.ReadLine(), out x) == false) { };
+                while (int.TryParse(Console.ReadLine(), out x) == false) { }
             } while (x < 1 | x > 2);
-            if (x != 1) Reverse = true;
+            if (x != 1) reverse = true;
 
-            s();
+            S();
 
             Console.Write("First Letter : ");
             string one = "";
@@ -138,7 +155,7 @@ namespace Cours8Exercice
 
             } while (one.Count() > 1 | one.Count() < 1);
 
-            s();
+            S();
 
             Console.Write("Second Letter : ");
             string two = "";
@@ -149,17 +166,17 @@ namespace Cours8Exercice
 
             } while (one.Count() > 1 | one.Count() < 1);
 
-            s();
+            S();
 
-            string Result = LetterLowerWin(one, two, Reverse);
-            Console.WriteLine($"Reverse = {Reverse} => {one} VS {two}  .... Winner {Result} !");
+            string result = LetterLowerWin(one, two, reverse);
+            Console.WriteLine($"Reverse = {reverse} => {one} VS {two}  .... Winner {result} !");
 
         }
 
 
 
 
-
+        //############## Imput checker ##################//
         private static void InputCheck(ref string x)
         {
             if (x.Any(ch => !Char.IsLetter(ch)) | x == "")
@@ -170,22 +187,32 @@ namespace Cours8Exercice
 
         }
 
+
+
+
+
         //################################################################### GRAPH ###############################################################
         //################################################################### GRAPH ###############################################################
         //################################################################### GRAPH ###############################################################
+
+
+
 
 
         private static Dictionary<string, List<string>> DictionnaryGraph()
         {
-            Dictionary<string, List<string>> Graphe = new Dictionary<string, List<string>>();
-            Graphe.Add("a", new List<string> { "b", "d" });
-            Graphe.Add("b", new List<string> { "a", "c" });
-            Graphe.Add("c", new List<string> { "b", "d", "e" });
-            Graphe.Add("d", new List<string> { "a", "c" });
-            Graphe.Add("e", new List<string> { "c" });
-            return Graphe;
+            Dictionary<string, List<string>> graphe = new Dictionary<string, List<string>>();
+            graphe.Add("a", new List<string> { "b", "d" });
+            graphe.Add("b", new List<string> { "a", "c" });
+            graphe.Add("c", new List<string> { "b", "d", "e" });
+            graphe.Add("d", new List<string> { "a", "c" });
+            graphe.Add("e", new List<string> { "c" });
+            return graphe;
         }
 
+
+
+        //Render 
         private static void InitDictionnaryGraphRender()
         {
             Console.WriteLine(@" Dictionary<string, List<string>> Graphe = new Dictionary<string, List<string>>();");
@@ -199,14 +226,15 @@ namespace Cours8Exercice
 
 
 
+
         //################################################################### STATIC ###############################################################
         //################################################################### STATIC ###############################################################
         //################################################################### STATIC ###############################################################
 
 
-        private static Stack<string> StackMovement = new Stack<string>();
-        private static List<string> NodeOrderList = new List<string>();
-        private static Queue<string> QueueMovement = new Queue<string>();
+        private static Stack<string> _stackMovement = new Stack<string>();
+        private static List<string> _nodeOrderList = new List<string>();
+        private static Queue<string> _queueMovement = new Queue<string>();
 
 
 
@@ -216,63 +244,67 @@ namespace Cours8Exercice
 
 
 
-        private static Queue<string> BFSClean(Dictionary<string, List<string>> Dic, string Root)
+
+        // bfs func
+        private static Queue<string> BfsClean(Dictionary<string, List<string>> dic, string root)
         {
-            if (Dic.Count == NodeOrderList.Count)
+            if (dic.Count == _nodeOrderList.Count)
             {
 
-                return QueueMovement;
+                return _queueMovement;
             }
 
             else
             {
 
-                QueueMovement.Enqueue(Root);
-                NodeOrderList.Add(Root);
-                foreach (var key in Dic)
+                _queueMovement.Enqueue(root);
+                _nodeOrderList.Add(root);
+                foreach (var key in dic)
                 {
 
-                    if (key.Key == Root)
+                    if (key.Key == root)
                     {
                         Console.Write($"(Key {key.Key}|");
 
                         for (int x = 0; x < key.Value.Count; ++x)
                         {
-                            if (!QueueMovement.Contains(key.Value[x])) { Console.Write($" {key.Value[x]},"); QueueMovement.Enqueue(key.Value[x]); }
+                            if (!_queueMovement.Contains(key.Value[x])) { Console.Write($" {key.Value[x]},"); _queueMovement.Enqueue(key.Value[x]); }
                         }
                     }
                 }
                 Console.Write($")    ");
 
-                foreach (var elem in QueueMovement)
+                foreach (var elem in _queueMovement)
                 {
-                    if (!NodeOrderList.Contains(elem))
+                    if (!_nodeOrderList.Contains(elem))
                     {
-                        Root = elem;
+                        root = elem;
                         break;
                     }
                 }
 
-                return BFSClean(Dic, Root);
+                return BfsClean(dic, root);
             }
         }
 
 
-        private static void BFSNormalInit()
-        {
-            NodeOrderList = new List<string>();
-            QueueMovement = new Queue<string>();
 
-            Dictionary<string, List<string>> Graphe = DictionnaryGraph();
+        //Init bfs
+        private static void BfsNormalInit()
+        {
+            _nodeOrderList = new List<string>();
+            _queueMovement = new Queue<string>();
+
+            Dictionary<string, List<string>> graphe = DictionnaryGraph();
 
             Console.WriteLine("~~~~PARCOURS BFS~~~~~");
-            Queue<string> Retour = BFSClean(Graphe, "b");
+            Queue<string> Retour = BfsClean(graphe, "b");
 
 
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("Simplement....");
-            foreach (var elem in NodeOrderList)
+            foreach (var elem in _nodeOrderList)
             {
                 Console.Write($"{elem},");
             }
@@ -281,16 +313,19 @@ namespace Cours8Exercice
 
         }
 
-        private static void BFSReverseInit()
+
+
+        //Init Reverse bfs
+        private static void BfsReverseInit()
         {
-            NodeOrderList = new List<string>();
-            QueueMovement = new Queue<string>();
+            _nodeOrderList = new List<string>();
+            _queueMovement = new Queue<string>();
 
 
-            Dictionary<string, List<string>> GrapheReversed = DictionnaryGraph();
+            Dictionary<string, List<string>> dictionnaryGraph = DictionnaryGraph();
 
 
-            foreach (var key in GrapheReversed.ToList())
+            foreach (var key in dictionnaryGraph.ToList())
             {
                 key.Value.Sort();
                 key.Value.Reverse();
@@ -299,46 +334,51 @@ namespace Cours8Exercice
 
 
             Console.WriteLine("~~~~PARCOURS BFS Reverse~~~~~");
-            Queue<string> RetourRev = BFSClean(GrapheReversed, "b");
+            Queue<string> RetourRev = BfsClean(dictionnaryGraph, "b");
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("Simplement....");
-            foreach (var elem in NodeOrderList)
+            foreach (var elem in _nodeOrderList)
             {
                 Console.Write($"{elem},");
             }
             Console.WriteLine();
             Console.WriteLine();
         }
+
+
+
         //################################################################### DFS ##################################################################
         //################################################################### DFS ##################################################################
         //################################################################### DFS ##################################################################
 
 
 
-        private static Stack<string> DFSClean(Dictionary<string, List<string>> Dic, string CurrentRoot)
+
+        //dfs func
+        private static Stack<string> DfsClean(Dictionary<string, List<string>> dic, string currentRoot)
         {
-            if (Dic.Count == NodeOrderList.Count)
+            if (dic.Count == _nodeOrderList.Count)
             {
 
-                return StackMovement;
+                return _stackMovement;
             }
 
             else
             {
 
 
-                if (!NodeOrderList.Contains(CurrentRoot))
-                    NodeOrderList.Add(CurrentRoot);
+                if (!_nodeOrderList.Contains(currentRoot))
+                    _nodeOrderList.Add(currentRoot);
 
 
 
-                StackMovement.Push(CurrentRoot);
+                _stackMovement.Push(currentRoot);
 
-                foreach (var key in Dic)
+                foreach (var key in dic)
                 {
 
-                    if (key.Key == CurrentRoot)
+                    if (key.Key == currentRoot)
                     {
                         Console.Write($"(Key {key.Key}|");
 
@@ -346,16 +386,16 @@ namespace Cours8Exercice
                         {
 
 
-                            if (!NodeOrderList.Contains(key.Value[x]))
+                            if (!_nodeOrderList.Contains(key.Value[x]))
                             {
 
                                 Console.Write($" {key.Value[x]},");
                                 Console.Write($")    ");
 
-                                StackMovement.Push(key.Value[x]);
-                                CurrentRoot = key.Value[x];
+                                _stackMovement.Push(key.Value[x]);
+                                currentRoot = key.Value[x];
 
-                                return DFSClean(Dic, CurrentRoot);
+                                return DfsClean(dic, currentRoot);
                             }
 
                         }
@@ -365,7 +405,7 @@ namespace Cours8Exercice
             }
 
 
-            if (NodeOrderList.Count != Dic.Count)
+            if (_nodeOrderList.Count != dic.Count)
             {
                 Console.Write($" No Child Node Avail )   ");
                 Console.Write($" Returning to Previous Key ");
@@ -375,29 +415,34 @@ namespace Cours8Exercice
             {
                 Console.Write($" All Nodes Used END )   ");
             }
-            CurrentRoot = NodeOrderList[NodeOrderList.Count - 2];
-            return DFSClean(Dic, CurrentRoot);
+            currentRoot = _nodeOrderList[_nodeOrderList.Count - 2];
+            return DfsClean(dic, currentRoot);
         }
 
-        private static void DFSNormalInit()
+
+
+
+
+        //Init normal dfs
+        private static void DfsNormalInit()
         {
-            NodeOrderList = new List<string>();
-            StackMovement = new Stack<string>();
+            _nodeOrderList = new List<string>();
+            _stackMovement = new Stack<string>();
 
 
 
-            Dictionary<string, List<string>> Graphe = DictionnaryGraph();
+            Dictionary<string, List<string>> graph = DictionnaryGraph();
 
 
             Console.WriteLine("~~~~PARCOURS DFS~~~~~");
-            Stack<string> ReturnPath = DFSClean(Graphe, "b");
+            Stack<string> ReturnPath = DfsClean(graph, "b");
 
             Console.WriteLine();
             Console.WriteLine();
 
 
             Console.WriteLine("Simplement....");
-            foreach (var elem in NodeOrderList)
+            foreach (var elem in _nodeOrderList)
             {
                 Console.Write($"{elem},");
             }
@@ -408,24 +453,29 @@ namespace Cours8Exercice
 
         }
 
-        private static void DFSReverseInit()
+
+
+
+
+        //init Reverse dfs
+        private static void DfsReverseInit()
         {
 
-            NodeOrderList = new List<string>();
-            StackMovement = new Stack<string>();
+            _nodeOrderList = new List<string>();
+            _stackMovement = new Stack<string>();
 
 
-            Dictionary<string, List<string>> Graphe = DictionnaryGraph();
+            Dictionary<string, List<string>> graphe = DictionnaryGraph();
 
 
-            foreach (var key in Graphe.ToList())
+            foreach (var key in graphe.ToList())
             {
                 key.Value.Sort();
                 key.Value.Reverse();
             }
 
             Console.WriteLine("~~~~PARCOURS DFS REV~~~~~");
-            Stack<string> ReturnPathRev = DFSClean(Graphe, "b");
+            Stack<string> returnPathRev = DfsClean(graphe, "b");
 
 
             Console.WriteLine();
@@ -433,7 +483,7 @@ namespace Cours8Exercice
 
 
             Console.WriteLine("Simplement....");
-            foreach (var elem in NodeOrderList)
+            foreach (var elem in _nodeOrderList)
             {
                 Console.Write($"{elem},");
             }
@@ -443,9 +493,16 @@ namespace Cours8Exercice
             Console.WriteLine();
         }
 
+
+
+
+
         //################################################################### SWITCH ###############################################################
         //################################################################### SWITCH ###############################################################
         //################################################################### SWITCH ###############################################################
+
+
+
 
         private static void ExSwitch()
         {
@@ -466,66 +523,73 @@ namespace Cours8Exercice
                 int choice;
                 do
                 {
-                    while (int.TryParse(Console.ReadLine(), out choice) == false) ;
+                    while (int.TryParse(Console.ReadLine(), out choice) == false)
+                    {
+                    }
                 } while (choice < 1 | choice > 8);
                 Console.Clear();
                 switch (choice)
                 {
                     case 1:
-                        BFSNormalInit();
-                        s();
-                        s();
+                        BfsNormalInit();
+                        S();
+                        S();
                         break;
                     case 2:
-                        BFSReverseInit();
-                        s();
-                        s();
+                        BfsReverseInit();
+                        S();
+                        S();
                         break;
                     case 3:
-                        DFSNormalInit();
-                        s();
-                        s();
+                        DfsNormalInit();
+                        S();
+                        S();
                         break;
                     case 4:
-                        DFSReverseInit();
-                        s();
-                        s();
+                        DfsReverseInit();
+                        S();
+                        S();
                         break;
                     case 5:
                         InitDictionnaryGraphRender();
-                        s();
-                        s();
+                        S();
+                        S();
                         break;
                     case 6:
                         InitRenderPeopleGraph();
-                        s();
-                        s();
+                        S();
+                        S();
                         break;
                     case 7:
                         InitCompairList();
-                        s();
-                        s();
+                        S();
+                        S();
                         break;
                     case 8:
                         InitCompairTest();
-                        s();
-                        s();
+                        S();
+                        S();
                         break;
                 }
             } while (true);
 
         }
 
-        private static void s()
+
+
+
+        private static void S()
         {
             Console.WriteLine();
         }
 
 
-        static void Main(string[] args)
-        {
-            ExSwitch();
 
+
+        private static void Main()
+        {
+         
+            ExSwitch();
         }
     }
 }

@@ -149,19 +149,20 @@ namespace Cours6Exercice
 
             Console.WriteLine("New TODO Database Name ?: ");
             string NewDataBaseName = Console.ReadLine().ToUpper(); // Upper make it more consistant
-            InputCheck(NewDataBaseName);    //InputCheck(NewDataBaseName); // not avail => todomenu
+            InputCheck(NewDataBaseName);    
 
 
             Thread.Sleep(200);
 
-            // USING todo_createdb // stocked procedures
             OpenConnectionToSQLServ();
             NewDatabaseCreate(NewDataBaseName);
             CloseConnectionToSQLServ();
 
         }
 
-        // Stocked Procedure use
+
+
+
         private static void NewDatabaseCreate(string dbname)
         {
 
@@ -191,10 +192,13 @@ namespace Cours6Exercice
 
 
 
-        //##########################################################################################################################################
-        //##########################################################################################################################################
-        //##########################################################################################################################################
-        // Exercice 65 User Creation
+        //#########################################################################################################################################
+        //#########################################             USER CREATION               #######################################################
+        //#########################################################################################################################################
+
+
+
+
         private static void ToDoUserCreation()
         {
 
@@ -203,16 +207,14 @@ namespace Cours6Exercice
             string ChoosedDataBase = Console.ReadLine().ToUpper();
             InputCheck(ChoosedDataBase);
 
-            //check procedure
             OpenConnectionToSQLServ();
             bool Choose = CheckTableExist(ChoosedDataBase);
             CloseConnectionToSQLServ();
 
 
-            if (Choose) // if db exist
+            if (Choose) 
             {
 
-                // USER VALUES #################################################
                 Console.WriteLine("Name new User : ");
                 string NewUsername = Console.ReadLine().ToUpper();
                 InputCheck(NewUsername);
@@ -220,10 +222,8 @@ namespace Cours6Exercice
                 Console.WriteLine($"{NewUsername} Password : ");
                 string NewPassword = Console.ReadLine().ToUpper();
                 InputCheck(NewPassword);
-                ////######################################################
 
-
-                //Procedure User table and user creation
+               
                 OpenConnectionToSQLServ();
                 bool Create = NewUserTableProc(ChoosedDataBase, NewUsername, NewPassword);
                 CloseConnectionToSQLServ();
@@ -246,7 +246,9 @@ namespace Cours6Exercice
 
         }
 
-        //Table check existance
+       
+
+
         private static bool CheckTableExist(string tablename)
         {
             int Count = 0;
@@ -287,7 +289,9 @@ namespace Cours6Exercice
         }
         
 
-        // new user table and associated to DBtable
+       
+
+
         private static bool NewUserTableProc(string DBCHOICE, string NUNAME, string NUPASS)
         {
 
@@ -320,6 +324,9 @@ namespace Cours6Exercice
             }
         }
 
+
+
+
         private static void UserSetCheck()
         {
             if (USERNAMESET == null | PASSWORDSET == null | DATABASESET == null)
@@ -331,14 +338,24 @@ namespace Cours6Exercice
             }
         }
 
-        //##########################################################################################################################################
-        //##########################################################################################################################################
-        //##########################################################################################################################################
 
-        static string DATABASESET;
-        static string USERNAMESET;
-        static string PASSWORDSET;
-        // Exercice 65 Set User and DataBase so they dont have to "Log in" everytime theres a todo to add or remove
+
+
+        //#########################################################################################################################################
+        //#########################################             USER SET GLOBAL              /#####################################################
+        //#########################################################################################################################################
+
+
+
+      //###### STATIC USER SET ######//
+        private static string DATABASESET;
+        private static string USERNAMESET;
+        private static string PASSWORDSET;
+        //###### STATIC USER SET ######//
+
+
+
+
         private static void SetTodoDBuser()
         {
             Console.Write("Set Database to use to : ");
@@ -361,7 +378,7 @@ namespace Cours6Exercice
                 TODOMENU();
             }
 
-            Thread.Sleep(200);                                            // Does (i lie i set it at the end)
+            Thread.Sleep(200);                                           
             Console.WriteLine($"Setted Datatbase to {DATABASESET}!");
             Console.WriteLine();
 
@@ -427,11 +444,12 @@ namespace Cours6Exercice
 
 
 
-        //##########################################################################################################################################
-        //##########################################################################################################################################
-        //##########################################################################################################################################
+        //#########################################################################################################################################
+        //#########################################                ADD TODO                 #######################################################
+        //#########################################################################################################################################
 
-        // Exercice 65 Adding a TODO (EASIEST PART OF THAT THING)
+       
+
         private static void AddTodoUser()
         {
 
@@ -455,7 +473,8 @@ namespace Cours6Exercice
         }
 
 
-        // PROC ADD SEND
+      
+
         private static bool AddSendodoUserProc(string SendtoUser, string Task)
         {
 
@@ -483,11 +502,110 @@ namespace Cours6Exercice
 
 
 
-        //##########################################################################################################################################
-        //##########################################################################################################################################
-        //##########################################################################################################################################
 
-        // Exercice 65 Visual of TODO Entered
+        //#########################################################################################################################################
+        //#########################################                SEND TODO                #######################################################
+        //#########################################################################################################################################
+
+
+
+        private static void SendTODO()
+        {
+            UserSetCheck();
+
+            Console.Write("Send Task to what user ? : ");
+            string ReceivingUser = Console.ReadLine().ToUpper();
+            InputCheck(ReceivingUser);
+            s();
+
+            Console.WriteLine($"Task to add to {ReceivingUser} TODO : ");
+            string TASK = Console.ReadLine();
+
+
+            OpenConnectionToSQLServ();
+            bool CHECK = AddSendodoUserProc(ReceivingUser, TASK);
+            CloseConnectionToSQLServ();
+
+
+            if (CHECK)
+            {
+                Console.WriteLine($"Task - {TASK} - Has been added to {ReceivingUser} TODO !");
+            }
+            else
+            {
+                Console.WriteLine($"Task - {TASK} - Could not be added to {ReceivingUser} TODO !");
+            }
+        }
+
+
+
+
+        //#########################################################################################################################################
+        //#########################################               REMOVE TODO               #######################################################
+        //#########################################################################################################################################
+
+
+
+        private static void RemoveTODO()
+        {
+            UserSetCheck();
+
+            Console.Write($"Witch one do you want to delete ?:");
+            int choice;
+            while (int.TryParse(Console.ReadLine(), out choice) == false) ;
+
+            OpenConnectionToSQLServ();
+            bool CHECK = RemovetodoProc(choice.ToString());
+            CloseConnectionToSQLServ();
+
+            if (CHECK)
+            {
+                Console.WriteLine($"TODO No {choice} has been removed from {USERNAMESET} TODO");
+            }
+            else
+            {
+                Console.WriteLine($"TODO No {choice} Could not be removed from {USERNAMESET} TODO");
+            }
+
+        }
+
+
+
+
+        private static bool RemovetodoProc(string id)
+        {
+            //int count = 0;
+            try
+            {
+                SqlCommand DeleteTodo = new SqlCommand();
+
+                DeleteTodo.Connection = TODOSqlConn;
+                DeleteTodo.CommandText = "todo_deletetodo";
+                DeleteTodo.Parameters.Clear();
+                DeleteTodo.CommandType = System.Data.CommandType.StoredProcedure;
+                DeleteTodo.Parameters.AddWithValue("@DATABASENAME", DATABASESET);
+                DeleteTodo.Parameters.AddWithValue("@USERNAME", USERNAMESET);
+                DeleteTodo.Parameters.AddWithValue("@ID", id);
+                DeleteTodo.ExecuteNonQuery();
+                return true;
+            }
+            catch (SqlException er)
+            {
+                Console.WriteLine("There was an error reported by SQL Server, " + er.Message);
+                return false;
+            }
+        }
+
+
+
+
+        //#########################################################################################################################################
+        //#########################################                SHOW TODO                #######################################################
+        //#########################################################################################################################################
+        
+
+
+
         private static void ShowTODO()
         {
             UserSetCheck();
@@ -569,97 +687,14 @@ namespace Cours6Exercice
         }
 
 
-        //##########################################################################################################################################
-        //##########################################################################################################################################
-        //##########################################################################################################################################
-
-        //Exercice 65 Removing element from TODO
-        private static void RemoveTODO()
-        {
-            UserSetCheck();
-
-            Console.Write($"Witch one do you want to delete ?:");
-            int choice;
-            while (int.TryParse(Console.ReadLine(), out choice) == false) ;
-
-            OpenConnectionToSQLServ();
-            bool CHECK = RemovetodoProc(choice.ToString());
-            CloseConnectionToSQLServ();
-
-            if (CHECK)
-            {
-                Console.WriteLine($"TODO No {choice} has been removed from {USERNAMESET} TODO");
-            }
-            else
-            {
-                Console.WriteLine($"TODO No {choice} Could not be removed from {USERNAMESET} TODO");
-            }
-
-        }
-
-        private static bool RemovetodoProc(string id)
-        {
-            int count = 0;
-            try
-            {
-                SqlCommand DeleteTodo = new SqlCommand();
-
-                DeleteTodo.Connection = TODOSqlConn;
-                DeleteTodo.CommandText = "todo_deletetodo";
-                DeleteTodo.Parameters.Clear();
-                DeleteTodo.CommandType = System.Data.CommandType.StoredProcedure;
-                DeleteTodo.Parameters.AddWithValue("@DATABASENAME", DATABASESET);
-                DeleteTodo.Parameters.AddWithValue("@USERNAME", USERNAMESET);
-                DeleteTodo.Parameters.AddWithValue("@ID", id);
-                DeleteTodo.ExecuteNonQuery();
-                return true;
-            }
-            catch (SqlException er)
-            {
-                Console.WriteLine("There was an error reported by SQL Server, " + er.Message);
-                return false;
-            }
-        }
 
         //##########################################################################################################################################
         //##########################################################################################################################################
         //##########################################################################################################################################
 
-        //send message ?
-        private static void SendTODO()
-        {
-            UserSetCheck();
-
-            Console.Write("Send Task to what user ? : ");
-            string ReceivingUser = Console.ReadLine().ToUpper();
-            InputCheck(ReceivingUser);
-            s();
-
-            Console.WriteLine($"Task to add to {ReceivingUser} TODO : ");
-            string TASK = Console.ReadLine();
+       
 
 
-            OpenConnectionToSQLServ();
-            bool CHECK = AddSendodoUserProc(ReceivingUser, TASK);
-            CloseConnectionToSQLServ();
-
-
-            if (CHECK)
-            {
-                Console.WriteLine($"Task - {TASK} - Has been added to {ReceivingUser} TODO !");
-            }
-            else
-            {
-                Console.WriteLine($"Task - {TASK} - Could not be added to {ReceivingUser} TODO !");
-            }
-        }
-
-
-        //##########################################################################################################################################
-        //##########################################################################################################################################
-        //##########################################################################################################################################
-
-        //private static List<Clients> USER = new List<Clients>();
         private static void TODOMENU()
         {
 
