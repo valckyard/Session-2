@@ -31,7 +31,7 @@ namespace Cours9ExercicesTer
             }
         }
 
-        public class Case
+        public struct Case
         {
             public Vecteur Vecteur;
             public Valeur Valeur;
@@ -43,6 +43,12 @@ namespace Cours9ExercicesTer
                 Vecteur = vec;
                 Valeur = Valeur.V;
                 Utilise = false;
+            }
+            public Case(Vecteur vec,bool used, Valeur val)
+            {
+                Vecteur = vec;
+                Valeur = val;
+                Utilise = used;
             }
             public bool Switchonuse()
             {
@@ -135,9 +141,12 @@ namespace Cours9ExercicesTer
             }
             else
             {
-                _myGrid.CasesDeGrid[$"{x}{y}"].Switchonuse();
+                //_myGrid.CasesDeGrid[$"{x}{y}"].Switchonuse();
+                _myGrid.CasesDeGrid.Remove($"{x}{y}");
+                _myGrid.CasesDeGrid.Add($"{x}{y}",new Case(new Vecteur(x,y),true,Player.ValJoueur));
 
-                PlayerValue(Player, _myGrid.CasesDeGrid[$"{x}{y}"]);
+
+                //PlayerValue(Player, _myGrid.CasesDeGrid[$"{x}{y}"]);
 
                 Console.WriteLine(_myGrid.CasesDeGrid[$"{x}{y}"].Valeur);
             }
