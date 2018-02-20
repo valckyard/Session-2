@@ -8,7 +8,7 @@ namespace Cours9ExercicesTer
     {
         public enum Valeur
         {
-            Vide,
+            V,
             X,
             O
         }
@@ -31,16 +31,17 @@ namespace Cours9ExercicesTer
             }
         }
 
-        public struct Case
+        public class Case
         {
             public Vecteur Vecteur;
             public Valeur Valeur;
+
             public bool Utilise;
 
-            public Case(Vecteur Vec)
+            public Case(Vecteur vec)
             {
-                Vecteur = Vec;
-                Valeur = Valeur.Vide;
+                Vecteur = vec;
+                Valeur = Valeur.V;
                 Utilise = false;
             }
             public bool Switchonuse()
@@ -49,21 +50,7 @@ namespace Cours9ExercicesTer
                 return Utilise;
             }
 
-            public Valeur PlayerValue(Joueur player)
-            {
-                if (player.ValJoueur == Valeur.O)
-                {
-                    Valeur = Valeur.O;
-                    return Valeur;
-                }
 
-                else
-                {
-                    Valeur = Valeur.X;
-                    return Valeur;
-                }
-                
-            }
 
 
         }
@@ -90,16 +77,32 @@ namespace Cours9ExercicesTer
 
             public void AfficherGrid()
             {
-                Console.WriteLine("             0                       1                           2");
+                Console.WriteLine($" Y");
                 Console.WriteLine($" 0     {CasesDeGrid["00"].Valeur}    |   {CasesDeGrid["10"].Valeur}   |    {CasesDeGrid["20"].Valeur}");
-                Console.WriteLine("--------------------------------------------------");
+                Console.WriteLine("      ----------------------");
                 Console.WriteLine($" 1     {CasesDeGrid["01"].Valeur}    |   {CasesDeGrid["11"].Valeur}   |    {CasesDeGrid["21"].Valeur}");
-                Console.WriteLine("--------------------------------------------------");
+                Console.WriteLine("      ----------------------");
                 Console.WriteLine($" 2     {CasesDeGrid["02"].Valeur}    |   {CasesDeGrid["12"].Valeur}   |    {CasesDeGrid["22"].Valeur}");
-
+                Console.WriteLine();
+                Console.WriteLine("       0        1        2   X");
             }
         }
 
+        public static Case PlayerValue(Joueur player, Case x)
+        {
+            if (player.ValJoueur == Valeur.O)
+            {
+                x.Valeur = (Valeur)2;
+                return x;
+            }
+
+            else
+            {
+                x.Valeur = (Valeur)1;
+                return x;
+            }
+
+        }
 
         static void PlayCase(ref Grid _myGrid, Joueur Player)
         {
@@ -110,18 +113,20 @@ namespace Cours9ExercicesTer
             while (int.TryParse(Console.ReadLine(), out x) == false)
             {
 
-                if (x < 0 | x > 3)
-                    PlayCase(ref _myGrid, Player);
+              
             }
+            if (x < 0 | x > 3)
+                PlayCase(ref _myGrid, Player);
             Console.WriteLine();
             Console.Write("Y axis : ");
             int y;
             while (int.TryParse(Console.ReadLine(), out y) == false)
             {
 
-                if (x < 0 | x > 3)
-                    PlayCase(ref _myGrid, Player);
+              
             }
+            if (y < 0 | y > 3)
+                PlayCase(ref _myGrid, Player);
 
             if (_myGrid.CasesDeGrid[$"{x}{y}"].Utilise)
             {
@@ -131,9 +136,12 @@ namespace Cours9ExercicesTer
             else
             {
                 _myGrid.CasesDeGrid[$"{x}{y}"].Switchonuse();
-                _myGrid.CasesDeGrid[$"{x}{y}"].PlayerValue(Player);
+
+                PlayerValue(Player, _myGrid.CasesDeGrid[$"{x}{y}"]);
+
+                Console.WriteLine(_myGrid.CasesDeGrid[$"{x}{y}"].Valeur);
             }
-         
+
 
 
         }
@@ -224,15 +232,27 @@ namespace Cours9ExercicesTer
 
         private static void CheckListWin(List<Valeur> YAxisChk)
         {
-            var valo = Valeur.O;
-            var valx = Valeur.X;
-            if (YAxisChk.All(o => o == valo))
+            int valo = 0;
+            int valx = 0;
+            foreach (var O in YAxisChk)
+            {
+                if (O == Valeur.O)
+                {
+                    ++valo;
+                }
+
+                if (O == Valeur.X)
+                {
+                    ++valx;
+                }
+            }
+            if (valo == 3)
             {
                 Console.WriteLine("Joueur O Gagne!");
                 Console.ReadLine();
-                    TheGame();
+                TheGame();
             }
-            if (YAxisChk.All(x => x == valx))
+            if (valx == 3)
             {
                 Console.WriteLine("Joueur X Gagne!");
                 Console.ReadLine();
@@ -254,12 +274,12 @@ namespace Cours9ExercicesTer
             magrille.AfficherGrid();
             List<Joueur> mesJoueurs = PlayerChoice();
             int x = 0;
-          
+
             do
             {
 
                 PlayCase(ref magrille, mesJoueurs[x]);
-               // CheckWin(magrille);
+                CheckWin(magrille);
                 if (x == 0)
                 {
                     x = 1;
@@ -268,6 +288,7 @@ namespace Cours9ExercicesTer
                 {
                     x = 0;
                 }
+                Console.Clear();
                 magrille.AfficherGrid();
             } while (true);
         }
