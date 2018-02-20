@@ -252,10 +252,10 @@ namespace Cours4Exercice
             if (N <= 1)         
                 return N;
 
-            else if (N % 2 != 0 | N == 2) //if its not dividable by 2 or is 2 
+            if (N % 2 != 0 | N == 2) //if its not dividable by 2 or is 2 
                 return N * N + Square(--N); // Calc and -1 to N
 
-            else // (N % 2 == 0)          //Everything that is divisible by 2
+             // (N % 2 == 0)          //Everything that is divisible by 2
                 return Square(--N);         // -1 to N No Calc
 
         }

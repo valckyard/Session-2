@@ -27,7 +27,8 @@ namespace Cours6Exercice
             }
             catch (Exception er)
             {
-                Console.WriteLine("There was an error reported by SQL Server, " + er.Message); return false;
+                Console.WriteLine("There was an error reported by SQL Server, " + er.Message);
+                return false;
             }
             return true;
         }

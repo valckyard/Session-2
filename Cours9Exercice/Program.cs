@@ -79,8 +79,8 @@ namespace Cours9Exercice
             Names zeName = (Names)Program.R.Next(0, 6);
             Races randRace = (Races)Program.R.Next(0, 3);
             int randHp = Program.R.Next(1, 101);
-            int randAtk = Program.R.Next(1, 10);
-            int randDef = Program.R.Next(1, 10);
+            int randAtk = Program.R.Next(1, 11);
+            int randDef = Program.R.Next(1, 11);
 
             Personnage randPers = new Personnage(zeName, randRace, randHp, randAtk, randDef);
             return randPers;
@@ -149,52 +149,52 @@ namespace Cours9Exercice
                 int powerUpChance = R.Next(0, 20);
                 switch (persAttacking)
                 {
-
                     case 1:
                         {
                             Console.ForegroundColor = ConsoleColor.Blue;
-                            if (powerUpChance == 0)
-                                hero.PowerUp();
-                            if (powerUpChance == 19)
-                                ennemi.PowerDown();
+
+                            switch (powerUpChance)
+                            {
+                                case 0:
+                                    hero.PowerUp();
+                                    continue;
+                                case 19:
+                                    hero.PowerDown();
+                                    continue;
+                            }
                             hero.FrapperUnAutrePers(ref ennemi);
                         }
                         break;
                     case 2:
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
-                            if (powerUpChance == 0)
-                                ennemi.PowerUp();
-                            if (powerUpChance == 19)
-                                ennemi.PowerDown();
+                            switch (powerUpChance)
+                            {
+                                case 0:
+                                    ennemi.PowerUp();
+                                    continue;
+                                case 19:
+                                    ennemi.PowerDown();
+                                    continue;
+                            }                           
                             ennemi.FrapperUnAutrePers(ref hero);
                         }
-
                         break;
                 }
-
                 if (persAttacking == 1)
-                {
                     persAttacking = 2;
-                }
                 else
-                {
                     persAttacking = 1;
-
-                }
 
                 Thread.Sleep(555);
             } while (ennemi.AmIDead() & hero.AmIDead());
 
             Console.ForegroundColor = ConsoleColor.Gray;
             if (hero.HitPoint <= 0)
-            {
                 Console.WriteLine($"{ennemi.Nom} Won with {ennemi.HitPoint} hP");
-            }
+
             else
-            {
                 Console.WriteLine($"{hero.Nom} Won with {hero.HitPoint} hP");
-            }
         }
 
 
