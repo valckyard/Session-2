@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2026
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cours1Notes", "Cours1Notes\Cours1Notes.csproj", "{F1EB834E-E484-4A72-9338-8FFDD6B3D13C}"
 EndProject
@@ -16,8 +16,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cours5Exercice", "Cours5Exercice\Cours5Exercice.csproj", "{B4A040B4-267D-442F-90B0-F103FA79C4FD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cours6Exercice", "Cours6Exercice\Cours6Exercice.csproj", "{23A4374F-9434-4B15-B910-A0022879F6E5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQL  TEST", "SQL  TEST\SQL  TEST.csproj", "{A2950F4E-5D7A-402B-9C7A-DCC535D29ADD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TODODBSQL", "TODODBSQL\TODODBSQL.csproj", "{FE3ACF0D-577C-45B6-8802-45D05023CDD5}"
 EndProject
@@ -36,6 +34,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cours9ExercicesTer", "Cours9ExercicesTer\Cours9ExercicesTer.csproj", "{9FE6178F-5907-4DBA-893E-F10B30921D1D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cours10Exercice", "Cours10Exercice\Cours10Exercice.csproj", "{9CDB1BA6-88B3-4EB3-ADF6-CF87CB86EBD1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sql Class", "Sql Class\Sql Class.csproj", "{198ABDEE-129A-495C-8551-9CED90266DC7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,10 +71,6 @@ Global
 		{23A4374F-9434-4B15-B910-A0022879F6E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23A4374F-9434-4B15-B910-A0022879F6E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23A4374F-9434-4B15-B910-A0022879F6E5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A2950F4E-5D7A-402B-9C7A-DCC535D29ADD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A2950F4E-5D7A-402B-9C7A-DCC535D29ADD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A2950F4E-5D7A-402B-9C7A-DCC535D29ADD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A2950F4E-5D7A-402B-9C7A-DCC535D29ADD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FE3ACF0D-577C-45B6-8802-45D05023CDD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FE3ACF0D-577C-45B6-8802-45D05023CDD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE3ACF0D-577C-45B6-8802-45D05023CDD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -111,6 +107,10 @@ Global
 		{9CDB1BA6-88B3-4EB3-ADF6-CF87CB86EBD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CDB1BA6-88B3-4EB3-ADF6-CF87CB86EBD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CDB1BA6-88B3-4EB3-ADF6-CF87CB86EBD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{198ABDEE-129A-495C-8551-9CED90266DC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{198ABDEE-129A-495C-8551-9CED90266DC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{198ABDEE-129A-495C-8551-9CED90266DC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{198ABDEE-129A-495C-8551-9CED90266DC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
