@@ -403,7 +403,7 @@ namespace Cours6Exercice
         // Create a Database of TODO in my "Database"#server
         private static void CreateTodoDB()
         {
-            bool ConnectOpen, CommandSent, ConnectClose;
+            bool ConnectOpen, CommandSent;
             Console.WriteLine("New TODO Database Name ?: ");
             string NewDataBaseName = Console.ReadLine().ToUpper(); // Upper make it more consistant
 
@@ -443,17 +443,16 @@ namespace Cours6Exercice
         // Exercice 65 User Creation
         private static void ToDoUserCreation()
         {
-            bool ConnectOpen, CommandSent, ConnectClose;
             Console.WriteLine("TODO DataBase to Use : ");
-            string ChoosedDataBase = Console.ReadLine().ToUpper();
+            string choosedDataBase = Console.ReadLine().ToUpper();
 
 
-            string tbaleexist = $"SELECT * FROM {ChoosedDataBase}";
+            string tbaleexist = $"SELECT * FROM {choosedDataBase}";
 
 
-            Console.WriteLine($"Using {ChoosedDataBase} DataBase!");
+            Console.WriteLine($"Using {choosedDataBase} DataBase!");
 
-            Console.WriteLine($"DataBase {ChoosedDataBase} does not exist!");
+            Console.WriteLine($"DataBase {choosedDataBase} does not exist!");
         }
         //if (ServerTODO.ContainsKey(ChoosedDataBase))                    // Does Database Exist 
         //{

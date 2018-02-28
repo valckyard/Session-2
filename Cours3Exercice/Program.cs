@@ -41,10 +41,9 @@ namespace Cours3Exercice
         //  (Notation de Landeau) de cet algorithme en C#
 
         // Exercice 32
-        public static double sommeMatrice(double[,] maMatrice)
+        public static double SommeMatrice(double[,] maMatrice)
         {
             double x = 0;
-            double y = 0;
             double somme = 0;
             for (int i = 0; i < maMatrice.GetLength(0); i++)// 2      //2*n
             {

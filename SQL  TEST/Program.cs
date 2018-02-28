@@ -21,7 +21,7 @@ namespace SqlTest_CSharp
                 string[] SplittedLine = OneLine.Split(',');             //splitting at , i dont want the rest
                 Noms.Add(SplittedLine[0]);
             }
-           StreamWriter  new str
+          // StreamWriter  new str
         }
           
     }
