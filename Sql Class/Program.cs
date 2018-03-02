@@ -1,22 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Data.SqlClient;
 
-namespace SQL__TEST
+namespace Sql_Class
 {
     public class NetworkedSql
     {
         public SqlConnection ConnSql { get; set; }
 
-        public NetworkedSql()
+        public NetworkedSql(string database)
         {
-            string ConnString = "Server=localhost;Initial Catalog=prof_parcinfo;User Id=sa; password=Blade880";
-            ConnSql = new SqlConnection(ConnString);
-
+            string connString = $"Server=localhost;Initial Catalog={database};User Id=sa; password=Blade880";
+            ConnSql = new SqlConnection(connString);
         }
 
-        public void SqlConnect()
+        public bool SqlConnect()
         {
             try
             {
@@ -25,11 +23,13 @@ namespace SQL__TEST
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                throw;
+                return false;
             }
+
+            return true;
         }
 
-        public void SqlDisconnect()
+        public bool SqlDisconnect()
         {
             try
             {
@@ -38,39 +38,125 @@ namespace SQL__TEST
             catch (Exception exception)
             {
                 Console.WriteLine(exception);
-                throw;
+                return false;
             }
+
+            return true;
         }
 
-        public void Read2Values(string myCommand,string value1,string value2)
+        public void ReadValues()
         {
-            SqlConnect();
-           var mycommand = new SqlCommand(myCommand,ConnSql);
-            SqlDataReader myreader = mycommand.ExecuteReader();
-            Console.WriteLine($"{value1}\t{value2}");
-            while (myreader.Read())
+            try
             {
-                //Console.Write(myreader.GetValue(1));
-                //Console.Write("  " +myreader.GetValue(2));
-                Console.Write(myreader[$"{value1}"]);
-                Console.Write("\t");
-                Console.Write(myreader[$"{value2}"]);
+                List<string> valueList = new List<string>();
+
+                Console.Write("Quel Table ? : ");
+                string table = Console.ReadLine().ToUpper();
+
+                if (table != "")
+                {
+
+
+                    int y;
+                    Console.Write("Combien de valeur a afficher ? : ");
+
+                    while (int.TryParse(Console.ReadLine(), out y) == false)
+                    {
+                    }
+
+
+                    for (int i = 0; i < y; i++)
+                    {
+                        Console.Write($"Nom de la column {i + 1} ? : ");
+                        valueList.Add(Console.ReadLine().ToUpper());
+                    }
+
+                    Console.WriteLine();
+                    //string value1 = Console.ReadLine().ToUpper();
+                    //string value2 = Console.ReadLine().ToUpper();
+
+
+                    string myCommand = $"SELECT * FROM {table}";
+                    SqlConnect();
+                    var mycommand = new SqlCommand(myCommand, ConnSql);
+                    SqlDataReader myreader = mycommand.ExecuteReader();
+                    foreach (var val in valueList)
+                    {
+                        Console.Write($"{val}");
+                        Console.Write("\t");
+                    }
+
+                    //Console.WriteLine($"{value1}\t{value2}");
+                    Console.WriteLine();
+
+
+                    while (myreader.Read())
+                    {
+                        int count = valueList.Count;
+                        int countz = 0;
+                        foreach (var val in valueList)
+                        {
+                            Console.Write(myreader[$"{val}"]);
+                            Console.Write("\t");
+                            ++countz;
+                            if (countz % count == 0)
+                            {
+                                Console.WriteLine();
+                            }
+                        }
+                    }
+                }
+
                 Console.WriteLine();
+                Console.WriteLine("Done! Press enter to continue!");
+                SqlDisconnect();
+                Console.ReadLine();
+                Console.Clear();
+                Program.RequeteSelect();
             }
-            Console.WriteLine("Done");
-            SqlDisconnect();
+            catch (Exception e)
+            {
+                Console.WriteLine("ERROR");
+                Console.ReadLine();
+                Console.Clear();
+                Program.RequeteSelect();
+            }
         }
 
-    }
-    class Program
-    {
-        static void Main(string[] args)
+       public class Program
         {
-            var myconn = new NetworkedSql();
-            string command = "SELECT * FROM Segment";
-            myconn.Read2Values(command,"Ipreseau","NbrSalle");
+           public static void Main(string[] args)
+            {
+                RequeteSelect();
+            }
 
+            public static void RequeteSelect()
+            {
+                Console.Write("Quelle base de donnees ? :");
+                string db = Console.ReadLine();
+                var myconn = new NetworkedSql(db);
+                if (myconn.SqlConnect())
+                {
+                    try
+                    {
+                        myconn.SqlDisconnect();
+                        myconn.ReadValues();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Impossible de Connecter a la base de donnee ! Press enter to try again!");
+                        Console.ReadLine();
+                        RequeteSelect();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Impossible de Connecter a la base de donnee ! Press enter to try again!");
+                    Console.ReadLine();
+                    RequeteSelect();
+                }
+               
+            }
         }
-
     }
 }
